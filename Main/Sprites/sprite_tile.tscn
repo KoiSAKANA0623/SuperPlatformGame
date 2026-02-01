@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://l5lajhnyihuj"]
+
+[ext_resource type="Material" uid="uid://pb41dqmmiyi6" path="res://Main/PaletteMat.tres" id="1_cuuw7"]
+[ext_resource type="Texture2D" uid="uid://cugaits6cfj6r" path="res://Char/SPR.png" id="1_vgrw6"]
+[ext_resource type="Script" uid="uid://bunknk0g16tvh" path="res://Main/Sprites/sprite_tile.gd" id="2_2ibmx"]
+
+[node name="SpriteTile" type="Sprite2D" unique_id=629529088]
+texture_filter = 1
+material = ExtResource("1_cuuw7")
+texture = ExtResource("1_vgrw6")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 8, 8)
+script = ExtResource("2_2ibmx")

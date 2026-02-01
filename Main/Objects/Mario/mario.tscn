@@ -1,0 +1,104 @@
+[gd_scene format=3 uid="uid://yf5ou73givsl"]
+
+[ext_resource type="Script" uid="uid://dniywsmlar4su" path="res://Main/Sprites/sprite_object.gd" id="1_hof7v"]
+[ext_resource type="Script" uid="uid://bunknk0g16tvh" path="res://Main/Sprites/sprite_tile.gd" id="2_aogfe"]
+[ext_resource type="Material" uid="uid://pb41dqmmiyi6" path="res://Main/PaletteMat.tres" id="2_ruk6f"]
+[ext_resource type="Texture2D" uid="uid://cugaits6cfj6r" path="res://Char/SPR.png" id="2_u5l1g"]
+[ext_resource type="Script" uid="uid://c4c742w3ug3ub" path="res://Main/Objects/Mario/MarioAnim.gd" id="5_3ls6t"]
+
+[node name="Mario" type="Node2D" unique_id=753764594]
+
+[node name="MarioAnim" type="Node" parent="." unique_id=733659931]
+script = ExtResource("5_3ls6t")
+
+[node name="MarioVisual" type="Node2D" parent="." unique_id=1935962333 node_paths=PackedStringArray("animation")]
+script = ExtResource("1_hof7v")
+animation = NodePath("../MarioAnim")
+metadata/_custom_type_script = "uid://dniywsmlar4su"
+
+[node name="SpriteTile" type="Sprite2D" parent="MarioVisual" unique_id=912130169]
+texture_filter = 1
+material = ExtResource("2_ruk6f")
+texture = ExtResource("2_u5l1g")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 8, 8)
+script = ExtResource("2_aogfe")
+metadata/_custom_type_script = "uid://bunknk0g16tvh"
+
+[node name="SpriteTile2" type="Sprite2D" parent="MarioVisual" unique_id=1321517705]
+texture_filter = 1
+material = ExtResource("2_ruk6f")
+position = Vector2(8, 0)
+texture = ExtResource("2_u5l1g")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 8, 8)
+script = ExtResource("2_aogfe")
+metadata/_custom_type_script = "uid://bunknk0g16tvh"
+
+[node name="SpriteTile3" type="Sprite2D" parent="MarioVisual" unique_id=491498065]
+texture_filter = 1
+material = ExtResource("2_ruk6f")
+position = Vector2(0, 8)
+texture = ExtResource("2_u5l1g")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 8, 8)
+script = ExtResource("2_aogfe")
+metadata/_custom_type_script = "uid://bunknk0g16tvh"
+
+[node name="SpriteTile4" type="Sprite2D" parent="MarioVisual" unique_id=455786305]
+texture_filter = 1
+material = ExtResource("2_ruk6f")
+position = Vector2(8, 8)
+texture = ExtResource("2_u5l1g")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 8, 8)
+script = ExtResource("2_aogfe")
+metadata/_custom_type_script = "uid://bunknk0g16tvh"
+
+[node name="SpriteTile5" type="Sprite2D" parent="MarioVisual" unique_id=1350911643]
+texture_filter = 1
+material = ExtResource("2_ruk6f")
+position = Vector2(0, 16)
+texture = ExtResource("2_u5l1g")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 8, 8)
+script = ExtResource("2_aogfe")
+metadata/_custom_type_script = "uid://bunknk0g16tvh"
+
+[node name="SpriteTile6" type="Sprite2D" parent="MarioVisual" unique_id=1317653179]
+texture_filter = 1
+material = ExtResource("2_ruk6f")
+position = Vector2(8, 16)
+texture = ExtResource("2_u5l1g")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 8, 8)
+script = ExtResource("2_aogfe")
+metadata/_custom_type_script = "uid://bunknk0g16tvh"
+
+[node name="SpriteTile7" type="Sprite2D" parent="MarioVisual" unique_id=1706747153]
+texture_filter = 1
+material = ExtResource("2_ruk6f")
+position = Vector2(0, 24)
+texture = ExtResource("2_u5l1g")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 8, 8)
+script = ExtResource("2_aogfe")
+metadata/_custom_type_script = "uid://bunknk0g16tvh"
+
+[node name="SpriteTile8" type="Sprite2D" parent="MarioVisual" unique_id=200470219]
+texture_filter = 1
+material = ExtResource("2_ruk6f")
+position = Vector2(8, 24)
+texture = ExtResource("2_u5l1g")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 8, 8)
+script = ExtResource("2_aogfe")
+metadata/_custom_type_script = "uid://bunknk0g16tvh"

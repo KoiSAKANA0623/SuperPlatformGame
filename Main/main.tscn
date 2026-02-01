@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://deblg8xy6vygc"]
+
+[ext_resource type="PackedScene" uid="uid://yf5ou73givsl" path="res://Main/Objects/Mario/mario.tscn" id="1_yh5la"]
+
+[node name="Main" type="Node2D" unique_id=80526666]
+
+[node name="Mario" parent="." unique_id=753764594 instance=ExtResource("1_yh5la")]

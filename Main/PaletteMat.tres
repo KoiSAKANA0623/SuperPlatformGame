@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://pb41dqmmiyi6"]
+
+[ext_resource type="Shader" uid="uid://b6f6nyhhee76m" path="res://Main/PaletteShad.gdshader" id="1_d0nm4"]
+[ext_resource type="Texture2D" uid="uid://dkb708e0imlkh" path="res://Palette/SPRPal0.png" id="2_mqvko"]
+[ext_resource type="Texture2D" uid="uid://cpwahjdy8li86" path="res://Palette/MainPal.png" id="3_8q1hh"]
+
+[resource]
+shader = ExtResource("1_d0nm4")
+shader_parameter/oldP = ExtResource("3_8q1hh")
+shader_parameter/newP = ExtResource("2_mqvko")
+shader_parameter/precision = 0.1
