@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://yf5ou73givsl"]
 
+[ext_resource type="Script" uid="uid://cirkjcdqb4l21" path="res://Main/Objects/Mario/mario.gd" id="1_8lt1j"]
 [ext_resource type="Script" uid="uid://dniywsmlar4su" path="res://Main/Sprites/sprite_object.gd" id="1_hof7v"]
 [ext_resource type="Script" uid="uid://bunknk0g16tvh" path="res://Main/Sprites/sprite_tile.gd" id="2_aogfe"]
 [ext_resource type="Material" uid="uid://pb41dqmmiyi6" path="res://Main/PaletteMat.tres" id="2_ruk6f"]
@@ -7,14 +8,18 @@
 [ext_resource type="Script" uid="uid://c4c742w3ug3ub" path="res://Main/Objects/Mario/MarioAnim.gd" id="5_3ls6t"]
 
 [node name="Mario" type="Node2D" unique_id=753764594]
+script = ExtResource("1_8lt1j")
 
-[node name="MarioAnim" type="Node" parent="." unique_id=733659931]
+[node name="MarioAnim" type="Node" parent="." unique_id=733659931 node_paths=PackedStringArray("spr_object")]
 script = ExtResource("5_3ls6t")
+spr_object = NodePath("../MarioVisual")
 
 [node name="MarioVisual" type="Node2D" parent="." unique_id=1935962333 node_paths=PackedStringArray("animation")]
+position = Vector2(0, 1)
 script = ExtResource("1_hof7v")
 animation = NodePath("../MarioAnim")
 metadata/_custom_type_script = "uid://dniywsmlar4su"
+metadata/_edit_lock_ = true
 
 [node name="SpriteTile" type="Sprite2D" parent="MarioVisual" unique_id=912130169]
 texture_filter = 1
@@ -102,3 +107,45 @@ region_enabled = true
 region_rect = Rect2(0, 0, 8, 8)
 script = ExtResource("2_aogfe")
 metadata/_custom_type_script = "uid://bunknk0g16tvh"
+
+[node name="MarioCollision" type="Node2D" parent="." unique_id=629211874]
+
+[node name="Head" type="RayCast2D" parent="MarioCollision" unique_id=1229112308]
+position = Vector2(8, 4)
+target_position = Vector2(0, -8)
+hit_from_inside = true
+
+[node name="LeftFoot" type="RayCast2D" parent="MarioCollision" unique_id=69777057]
+position = Vector2(3, 32)
+target_position = Vector2(0, 8.1)
+hit_from_inside = true
+
+[node name="RightFoot" type="RayCast2D" parent="MarioCollision" unique_id=1315569345]
+position = Vector2(13, 32)
+target_position = Vector2(0, 8.1)
+hit_from_inside = true
+
+[node name="LeftSideHi" type="RayCast2D" parent="MarioCollision" unique_id=2050054088]
+position = Vector2(2, 8)
+target_position = Vector2(-8, 0)
+hit_from_inside = true
+
+[node name="ColorRect" type="ColorRect" parent="MarioCollision/LeftSideHi" unique_id=701435671]
+offset_right = 1.0
+offset_bottom = 1.0
+color = Color(1, 1, 0, 1)
+
+[node name="LeftSideLo" type="RayCast2D" parent="MarioCollision" unique_id=1313388723]
+position = Vector2(2, 24)
+target_position = Vector2(-8, 0)
+hit_from_inside = true
+
+[node name="RightSideHi" type="RayCast2D" parent="MarioCollision" unique_id=1468845943]
+position = Vector2(14, 8)
+target_position = Vector2(8, 0)
+hit_from_inside = true
+
+[node name="RightSideLo" type="RayCast2D" parent="MarioCollision" unique_id=917091814]
+position = Vector2(14, 24)
+target_position = Vector2(8, 0)
+hit_from_inside = true
