@@ -7,6 +7,12 @@
 [ext_resource type="Texture2D" uid="uid://cugaits6cfj6r" path="res://Char/SPR.png" id="2_u5l1g"]
 [ext_resource type="Script" uid="uid://c4c742w3ug3ub" path="res://Main/Objects/Mario/MarioAnim.gd" id="5_3ls6t"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8lt1j"]
+size = Vector2(4, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jl3j7"]
+size = Vector2(12, 4)
+
 [node name="Mario" type="Node2D" unique_id=753764594]
 script = ExtResource("1_8lt1j")
 
@@ -145,3 +151,20 @@ hit_from_inside = true
 position = Vector2(12, 25)
 target_position = Vector2(3, 0)
 hit_from_inside = true
+
+[node name="TopCheck" type="Area2D" parent="MarioCollision" unique_id=1987298175]
+top_level = true
+position = Vector2(8, -8)
+
+[node name="TopCol" type="CollisionShape2D" parent="MarioCollision/TopCheck" unique_id=895165438]
+shape = SubResource("RectangleShape2D_8lt1j")
+
+[node name="BottomCheck" type="Area2D" parent="MarioCollision" unique_id=1633296625]
+top_level = true
+position = Vector2(8, 40)
+
+[node name="BottomCol" type="CollisionShape2D" parent="MarioCollision/BottomCheck" unique_id=315937392]
+shape = SubResource("RectangleShape2D_jl3j7")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=795794541]
+top_level = true

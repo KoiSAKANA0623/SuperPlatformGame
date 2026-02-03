@@ -3,6 +3,7 @@ class_name Mario_Player
 
 @onready var Anim_Node = $MarioAnim
 @onready var Visual_Node = $MarioVisual
+@onready var Camera_Node = $Camera2D
 
 @onready var HeadCol = $MarioCollision/Head
 @onready var LeftSiHiCol = $MarioCollision/LeftSideHi
@@ -11,6 +12,8 @@ class_name Mario_Player
 @onready var RightSiLoCol = $MarioCollision/RightSideLo
 @onready var LeftFootCol = $MarioCollision/LeftFoot
 @onready var RightFootCol = $MarioCollision/RightFoot
+@onready var TopBlock_Check = $MarioCollision/TopCheck
+@onready var BottomBlock_Check = $MarioCollision/BottomCheck
 
 var inp_axis: float = 0.0
 
@@ -21,12 +24,13 @@ var running_timer: int = 0
 var max_speed: float = 1.5
 var accel: float = 0.037109375
 var friction: float = 0.07421875
+var crouch_acc: float = 0.037109375
 var skidding: bool = false
 var y_velocity: float = 0.0
 var gravity: float = 0.15625
 var jmp_gravity: float = 0.125
 
-var is_bigMario: int = 9
+var is_bigMario: int = 9 #9
 var is_duck: bool = false
 var is_grounded: bool = false
 
@@ -55,7 +59,6 @@ func _ready() -> void:
 		Visual_Node.anim = 2 + is_bigMario
 	else:
 		Visual_Node.anim = 1 + is_bigMario
-	set_collision()
 ## END of _ready
 
 
@@ -63,6 +66,7 @@ func _physics_process(_delta: float) -> void:
 	inp_axis = Input.get_axis("Left","Right")
 	if inp_axis && is_grounded:
 		direction = inp_axis
+	set_collision()
 
 	if Input.is_action_pressed("Run") && is_grounded:
 		running_timer = 10
@@ -79,15 +83,23 @@ func _physics_process(_delta: float) -> void:
 			max_speed = WALK_MAX
 			accel = WALK_ACC / 256.0
 			friction = WALK_FRICTION / 256.0
+
+		if !is_duck:
+			if abs(x_velocity) > WALK_MAX:
+				crouch_acc = AIR_ACC / 256.0
+			else:
+				crouch_acc = WALK_ACC / 256.0
+
 		if x_velocity != 0.0:
 			if sign(direction) != sign(x_velocity):
 				skidding = true
-		if skidding && abs(x_velocity) < 0.625:
-			x_velocity = 0.0
+		if skidding or is_duck:
+			if abs(x_velocity) < 0.625:
+				x_velocity = 0.0
 		if !inp_axis && abs(x_velocity) < 0.07421875:
 			x_velocity = 0.0
 
-		if inp_axis:
+		if inp_axis && !is_duck:
 			if skidding:
 				x_velocity = move_toward(x_velocity, max_speed * direction, friction)
 			else:
@@ -96,12 +108,21 @@ func _physics_process(_delta: float) -> void:
 			if skidding:
 				x_velocity = move_toward(x_velocity, 0.0, friction)
 			else:
-				x_velocity = move_toward(x_velocity, 0.0, accel)
+				if is_duck:
+					x_velocity = move_toward(x_velocity, 0.0, crouch_acc)
+				else:
+					x_velocity = move_toward(x_velocity, 0.0, accel)
 
-		if inp_axis == -1:
-			Visual_Node.horz_mirror = true
-		elif inp_axis == 1:
-			Visual_Node.horz_mirror = false
+		if Input.is_action_pressed("Down"):
+			is_duck = true
+		else:
+			is_duck = false
+
+		if !is_duck:
+			if inp_axis == -1:
+				Visual_Node.horz_mirror = true
+			elif inp_axis == 1:
+				Visual_Node.horz_mirror = false
 	else:
 		if abs(floor_last_vel) <= WALK_MAX:
 			max_speed = WALK_MAX
@@ -144,7 +165,8 @@ func _physics_process(_delta: float) -> void:
 				y_velocity = -B_JMP_STRG
 			else:
 				y_velocity = -JMP_STRG
-			Visual_Node.anim = 4 + is_bigMario
+			if Visual_Node.anim != 14:
+				Visual_Node.anim = 4 + is_bigMario
 			is_grounded = false
 			if abs(x_velocity) < 1.0:
 				gravity = SLO_GRAVITY
@@ -159,39 +181,68 @@ func _physics_process(_delta: float) -> void:
 
 	# Set Anims
 	if is_grounded:
-		if x_velocity or inp_axis:
-			if skidding && abs(x_velocity) > 0.625:
-				Visual_Node.anim = 3 + is_bigMario
-			else:
-				Visual_Node.anim = 2 + is_bigMario
-				if abs(x_velocity) >= 1.75:
-					Anim_Node.anim_speed = 2
-				elif abs(x_velocity) >= 0.875:
-					Anim_Node.anim_speed = 4
+		if is_duck && is_bigMario != 0:
+			if inp_axis:
+				if x_velocity:
+					Visual_Node.anim = 2 + is_bigMario
+					if abs(x_velocity) >= 1.75:
+						Anim_Node.anim_speed = 2
+					elif abs(x_velocity) >= 0.875:
+						Anim_Node.anim_speed = 4
+					else:
+						Anim_Node.anim_speed = 7
 				else:
-					Anim_Node.anim_speed = 7
+					Visual_Node.anim = 1 + is_bigMario
+			else:
+				Visual_Node.anim = 14
 		else:
-			Visual_Node.anim = 1 + is_bigMario
+			if inp_axis:
+				if x_velocity:
+					if skidding && abs(x_velocity) > 0.625:
+						Visual_Node.anim = 3 + is_bigMario
+					else:
+						Visual_Node.anim = 2 + is_bigMario
+						if abs(x_velocity) >= 1.75:
+							Anim_Node.anim_speed = 2
+						elif abs(x_velocity) >= 0.875:
+							Anim_Node.anim_speed = 4
+						else:
+							Anim_Node.anim_speed = 7
+				else:
+					Visual_Node.anim = 1 + is_bigMario
+			else:
+				Visual_Node.anim = 1 + is_bigMario
 	else:
 		Anim_Node.anim_speed = 0
+
+	camera()
 ## END of _physics_process
 
 
 func do_collisions() -> void:
 # Ceiling Collision
+	TopBlock_Check.global_position.x = round(global_position.x/16)*16 + 8
+	if Visual_Node.anim == 14 || is_bigMario == 0:
+		TopBlock_Check.global_position.y = round(global_position.y/16)*16 + 8
+	else:
+		TopBlock_Check.global_position.y = round(global_position.y/16)*16 - 8
 	var vel_clamp = clamp(y_velocity,-5.0,0.0)
 	HeadCol.target_position.y = vel_clamp
+	if y_velocity < 0.0:
+		if HeadCol.is_colliding() && TopBlock_Check.get_overlapping_bodies():
+			y_velocity = 1.0
 # Floor Collision
+	BottomBlock_Check.global_position.x = round(global_position.x) + 8
+	BottomBlock_Check.global_position.y = round(global_position.y/16)*16 + 40
 	vel_clamp = clamp(y_velocity,0.0,5.0)
-	var a = round(global_position.y)
+	var a = round(global_position.y/16)*16
 	var b = (round(LeftFootCol.get_collision_point().y) - 32)
 	var c = (round(RightFootCol.get_collision_point().y) - 32)
-	print(a-b)
 	LeftFootCol.target_position.y = vel_clamp
 	RightFootCol.target_position.y = vel_clamp
-	if y_velocity >= 0.0:
+	if y_velocity >= 0.0 && BottomBlock_Check.get_overlapping_bodies():
 		if LeftFootCol.is_colliding():
-			if abs(a-b) < 8.0:
+			if (a-b) <= 2.0:
 				global_position.y = (round(LeftFootCol.get_collision_point().y/16)*16 - 32)
 				is_grounded = true
 		elif RightFootCol.is_colliding():
@@ -200,7 +251,8 @@ func do_collisions() -> void:
 				is_grounded = true
 		else:
 			is_grounded = false
-	return
+	else:
+		is_grounded = false
 # Wall Collision
 	if LeftSiHiCol.is_colliding():
 		if x_velocity <= 0.0:
@@ -214,7 +266,7 @@ func do_collisions() -> void:
 			global_position.x -= 1
 			x_velocity = 0.0
 			return
-	elif x_velocity > 0.0:
+	elif x_velocity >= 0.0:
 		if RightSiHiCol.is_colliding():
 			global_position.x -= clamp(global_position.x - int(RightSiHiCol.get_collision_point().x - 15),-10,2)
 			global_position.x += 1
@@ -230,7 +282,7 @@ func do_collisions() -> void:
 
 
 func set_collision() -> void:
-	if is_bigMario != 0:
+	if is_bigMario != 0 && Visual_Node.anim != 14:
 		HeadCol.position = Vector2(8,4)
 		LeftSiHiCol.position = Vector2(4,8)
 		RightSiHiCol.position = Vector2(12,8)
@@ -245,5 +297,10 @@ func set_collision() -> void:
 	RightFootCol.position = Vector2(13,32)
 	LeftSiLoCol.position = Vector2(4,25)
 	RightSiLoCol.position = Vector2(12,25)
-
 ## END of set_collision
+
+
+func camera() -> void:
+	Camera_Node.global_position.y = 112
+	Camera_Node.global_position.x = global_position.x
+## END of camera
