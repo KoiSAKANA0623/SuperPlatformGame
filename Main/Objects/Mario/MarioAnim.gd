@@ -1,3 +1,4 @@
+@tool
 extends "res://Main/Sprites/sprite_anim.gd"
 
 @export var spr_object: SpriteObject
@@ -418,7 +419,7 @@ func set_animations() -> void:
 	animations.append_array(animframes)
 	animframes.clear()
 	# SM Walk
-	animframes.push_back([1,2,3])
+	animframes.push_back([3,1,2,3])
 	animations.append_array(animframes)
 	animframes.clear()
 	# SM Skid
@@ -454,7 +455,7 @@ func set_animations() -> void:
 	animations.append_array(animframes)
 	animframes.clear()
 	# BM Walk
-	animframes.push_back([15,16,17])
+	animframes.push_back([17,15,16,17])
 	animations.append_array(animframes)
 	animframes.clear()
 	# BM Skid
@@ -515,12 +516,18 @@ func animate(anim) -> void:
 		1: # SM Idle
 			true_frame = animations[anim][0]
 		2: # SM Walk
-			frame_timer += 1
-			if frame_timer >= anim_speed:
-				frame_timer = 0
-				fake_frame += 1
-				if fake_frame >= 3:
-					fake_frame = 0
+			if anim_speed:
+				frame_timer += 1
+				if fake_frame == 0:
+					if frame_timer >= 2:
+						frame_timer = 0
+						fake_frame += 1
+				else:
+					if frame_timer >= anim_speed:
+						frame_timer = 0
+						fake_frame += 1
+						if fake_frame >= 4:
+							fake_frame = 1
 			true_frame = animations[anim][fake_frame]
 		3: # SM Skid
 			true_frame = animations[anim][0]
@@ -566,12 +573,18 @@ func animate(anim) -> void:
 		10: # BM Idle
 			true_frame = animations[anim][0]
 		11: # BM Walk
-			frame_timer += 1
-			if frame_timer >= 7:
-				frame_timer = 0
-				fake_frame += 1
-				if fake_frame >= 3:
-					fake_frame = 0
+			if anim_speed:
+				frame_timer += 1
+				if fake_frame == 0:
+					if frame_timer >= 2:
+						frame_timer = 0
+						fake_frame += 1
+				else:
+					if frame_timer >= anim_speed:
+						frame_timer = 0
+						fake_frame += 1
+						if fake_frame >= 4:
+							fake_frame = 1
 			true_frame = animations[anim][fake_frame]
 		12: # BM Skid
 			true_frame = animations[anim][0]
@@ -638,3 +651,18 @@ func animate(anim) -> void:
 	last_anim = anim
 	spr_object.set_sprite()
 ## END of animate
+
+
+func editor_sprite() -> void:
+	var tileframes: Array
+	tileframes.push_back([12,15,false,false,true])
+	tileframes.push_back([12,15,false,false,true])
+	tileframes.push_back([12,15,false,false,true])
+	tileframes.push_back([12,15,false,false,true])
+	tileframes.push_back([10,3,false,false,true])
+	tileframes.push_back([7,3,false,false,true])
+	tileframes.push_back([15,4,false,false,true])
+	tileframes.push_back([15,4,true,false,true])
+	edit_frame.append_array(tileframes)
+	tileframes.clear()
+## END of editor_sprite

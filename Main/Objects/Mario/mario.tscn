@@ -27,7 +27,7 @@ material = ExtResource("2_ruk6f")
 texture = ExtResource("2_u5l1g")
 centered = false
 region_enabled = true
-region_rect = Rect2(0, 0, 8, 8)
+region_rect = Rect2(96, 120, 8, 8)
 script = ExtResource("2_aogfe")
 metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
@@ -38,7 +38,7 @@ position = Vector2(8, 0)
 texture = ExtResource("2_u5l1g")
 centered = false
 region_enabled = true
-region_rect = Rect2(0, 0, 8, 8)
+region_rect = Rect2(96, 120, 8, 8)
 script = ExtResource("2_aogfe")
 metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
@@ -49,7 +49,7 @@ position = Vector2(0, 8)
 texture = ExtResource("2_u5l1g")
 centered = false
 region_enabled = true
-region_rect = Rect2(0, 0, 8, 8)
+region_rect = Rect2(96, 120, 8, 8)
 script = ExtResource("2_aogfe")
 metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
@@ -60,7 +60,7 @@ position = Vector2(8, 8)
 texture = ExtResource("2_u5l1g")
 centered = false
 region_enabled = true
-region_rect = Rect2(0, 0, 8, 8)
+region_rect = Rect2(96, 120, 8, 8)
 script = ExtResource("2_aogfe")
 metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
@@ -71,7 +71,7 @@ position = Vector2(0, 16)
 texture = ExtResource("2_u5l1g")
 centered = false
 region_enabled = true
-region_rect = Rect2(0, 0, 8, 8)
+region_rect = Rect2(80, 24, 8, 8)
 script = ExtResource("2_aogfe")
 metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
@@ -82,7 +82,7 @@ position = Vector2(8, 16)
 texture = ExtResource("2_u5l1g")
 centered = false
 region_enabled = true
-region_rect = Rect2(0, 0, 8, 8)
+region_rect = Rect2(56, 24, 8, 8)
 script = ExtResource("2_aogfe")
 metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
@@ -93,7 +93,7 @@ position = Vector2(0, 24)
 texture = ExtResource("2_u5l1g")
 centered = false
 region_enabled = true
-region_rect = Rect2(0, 0, 8, 8)
+region_rect = Rect2(120, 32, 8, 8)
 script = ExtResource("2_aogfe")
 metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
@@ -103,8 +103,9 @@ material = ExtResource("2_ruk6f")
 position = Vector2(8, 24)
 texture = ExtResource("2_u5l1g")
 centered = false
+flip_h = true
 region_enabled = true
-region_rect = Rect2(0, 0, 8, 8)
+region_rect = Rect2(120, 32, 8, 8)
 script = ExtResource("2_aogfe")
 metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
@@ -126,26 +127,21 @@ target_position = Vector2(0, 8.1)
 hit_from_inside = true
 
 [node name="LeftSideHi" type="RayCast2D" parent="MarioCollision" unique_id=2050054088]
-position = Vector2(2, 8)
-target_position = Vector2(-8, 0)
+position = Vector2(4, 8)
+target_position = Vector2(-3, 0)
 hit_from_inside = true
 
-[node name="ColorRect" type="ColorRect" parent="MarioCollision/LeftSideHi" unique_id=701435671]
-offset_right = 1.0
-offset_bottom = 1.0
-color = Color(1, 1, 0, 1)
-
 [node name="LeftSideLo" type="RayCast2D" parent="MarioCollision" unique_id=1313388723]
-position = Vector2(2, 24)
-target_position = Vector2(-8, 0)
+position = Vector2(4, 25)
+target_position = Vector2(-3, 0)
 hit_from_inside = true
 
 [node name="RightSideHi" type="RayCast2D" parent="MarioCollision" unique_id=1468845943]
-position = Vector2(14, 8)
-target_position = Vector2(8, 0)
+position = Vector2(12, 8)
+target_position = Vector2(3, 0)
 hit_from_inside = true
 
 [node name="RightSideLo" type="RayCast2D" parent="MarioCollision" unique_id=917091814]
-position = Vector2(14, 24)
-target_position = Vector2(8, 0)
+position = Vector2(12, 25)
+target_position = Vector2(3, 0)
 hit_from_inside = true
