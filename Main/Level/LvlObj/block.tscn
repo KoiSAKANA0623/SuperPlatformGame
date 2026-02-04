@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://de8qi1747lijn"]
+
+[ext_resource type="Texture2D" uid="uid://dm5rs0sx8bygw" path="res://Char/BG.png" id="1_pkr5q"]
+
+[node name="Block" type="Node2D" unique_id=421025868]
+
+[node name="Tile" type="TextureRect" parent="." unique_id=1934906770]
+offset_right = 8.0
+offset_bottom = 8.0
+texture = ExtResource("1_pkr5q")
+expand_mode = 1
+stretch_mode = 1

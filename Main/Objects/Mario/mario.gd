@@ -120,7 +120,7 @@ func _physics_process(_delta: float) -> void:
 	else:
 		if !underwater:
 			Anim_Node.anim_speed = 0
-			if Visual_Node.anim == 3 + is_bigMario:
+			if (Visual_Node.anim == 3 + is_bigMario) || (Visual_Node.anim == 1 + is_bigMario):
 				Visual_Node.anim = 2 + is_bigMario
 		else:
 			if swim_counter:
@@ -420,10 +420,10 @@ func set_collision() -> void:
 
 
 func camera() -> void:
-	var cam_move = (global_position.x+16) - Camera_Node.global_position.x
+	var cam_move = (global_position.x+16.0) - Camera_Node.global_position.x
 	Camera_Node.global_position.y = 128
 
-	if global_position.x+16 > Camera_Node.global_position.x:
+	if global_position.x+16.0 > Camera_Node.global_position.x:
 		Camera_Node.global_position.x += cam_move
 
 	if global_position.x >= 512:

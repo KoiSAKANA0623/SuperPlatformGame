@@ -6,6 +6,7 @@ extends Node
 @onready var MainPal : Texture = preload("res://Palette/MainPal.png")
 @onready var Pal_Shader : ShaderMaterial = preload("res://Main/PaletteMat.tres")
 
+@onready var Block = preload("res://Main/Level/LvlObj/block.tscn")
 
 var TILPal0 : Texture = preload("res://Palette/SPRPal0.png")
 var TILPal1 : Texture = preload("res://Palette/SPRPal0.png")

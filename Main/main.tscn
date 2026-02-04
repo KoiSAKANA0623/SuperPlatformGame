@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://deblg8xy6vygc"]
 
+[ext_resource type="Script" uid="uid://cr6ry22wmv4y" path="res://Main/main.gd" id="1_2w1kt"]
 [ext_resource type="PackedScene" uid="uid://yf5ou73givsl" path="res://Main/Objects/Mario/mario.tscn" id="1_yh5la"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yh5la"]
@@ -15,6 +16,15 @@ size = Vector2(64, 80)
 size = Vector2(128, 16)
 
 [node name="Main" type="Node2D" unique_id=80526666]
+script = ExtResource("1_2w1kt")
+
+[node name="BG" type="CanvasLayer" parent="." unique_id=288968489]
+layer = -1
+
+[node name="BGColor" type="ColorRect" parent="BG" unique_id=1999881668]
+offset_right = 256.0
+offset_bottom = 248.0
+color = Color(0.57254905, 0.5647059, 1, 1)
 
 [node name="FloorTest" type="StaticBody2D" parent="." unique_id=2126844513]
 position = Vector2(0, 208)
@@ -64,5 +74,12 @@ offset_right = 256.0
 offset_bottom = -80.0
 metadata/_edit_lock_ = true
 
-[node name="Mario" parent="." unique_id=753764594 instance=ExtResource("1_yh5la")]
+[node name="Level" type="CanvasLayer" parent="." unique_id=1628418822]
+layer = 0
+follow_viewport_enabled = true
+
+[node name="Sprites" type="CanvasLayer" parent="." unique_id=1403044072]
+follow_viewport_enabled = true
+
+[node name="Mario" parent="Sprites" unique_id=753764594 instance=ExtResource("1_yh5la")]
 position = Vector2(0, 112)
