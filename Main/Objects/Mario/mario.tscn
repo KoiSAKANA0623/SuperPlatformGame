@@ -168,3 +168,9 @@ shape = SubResource("RectangleShape2D_jl3j7")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=795794541]
 top_level = true
+position = Vector2(128, 128)
+
+[node name="Origin" type="ColorRect" parent="." unique_id=938249971]
+visible = false
+offset_right = 1.0
+offset_bottom = 1.0

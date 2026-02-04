@@ -3,10 +3,10 @@
 [ext_resource type="PackedScene" uid="uid://yf5ou73givsl" path="res://Main/Objects/Mario/mario.tscn" id="1_yh5la"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yh5la"]
-size = Vector2(256, 32)
+size = Vector2(528, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2w1kt"]
-size = Vector2(64, 64)
+size = Vector2(80, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qvhan"]
 size = Vector2(64, 80)
@@ -20,12 +20,12 @@ size = Vector2(128, 16)
 position = Vector2(0, 208)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FloorTest" unique_id=155278782]
-position = Vector2(128, 16)
+position = Vector2(248, 16)
 shape = SubResource("RectangleShape2D_yh5la")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="FloorTest" unique_id=1174337861]
-position = Vector2(32, -32)
+position = Vector2(24, -32)
 shape = SubResource("RectangleShape2D_2w1kt")
 metadata/_edit_lock_ = true
 
@@ -40,11 +40,13 @@ shape = SubResource("RectangleShape2D_eunhr")
 metadata/_edit_lock_ = true
 
 [node name="ColorRect" type="ColorRect" parent="FloorTest" unique_id=1930028402]
-offset_right = 256.0
+offset_left = -16.0
+offset_right = 512.0
 offset_bottom = 32.0
 metadata/_edit_lock_ = true
 
 [node name="ColorRect3" type="ColorRect" parent="FloorTest" unique_id=530626749]
+offset_left = -16.0
 offset_top = -64.0
 offset_right = 64.0
 metadata/_edit_lock_ = true
@@ -63,4 +65,4 @@ offset_bottom = -80.0
 metadata/_edit_lock_ = true
 
 [node name="Mario" parent="." unique_id=753764594 instance=ExtResource("1_yh5la")]
-position = Vector2(128, 75)
+position = Vector2(0, 112)

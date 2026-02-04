@@ -509,7 +509,6 @@ func animate(anim) -> void:
 	if anim != last_anim:
 		fake_frame = 0
 		frame_timer = 0
-		EXframe_timer = 0
 	match anim:
 		0: # Null
 			true_frame = animations[anim][0]
