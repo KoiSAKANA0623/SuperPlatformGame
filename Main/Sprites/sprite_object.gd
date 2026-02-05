@@ -1,5 +1,5 @@
 @tool
-@icon("res://Icons/spr_obj_node.svg")
+@icon("res://Icons/spr_obj_node.png")
 extends Node2D
 class_name SpriteObject
 

@@ -1,3 +1,4 @@
+@icon("res://Icons/Objects/mario.png")
 extends Node2D
 class_name Mario_Player
 
@@ -36,7 +37,9 @@ var is_duck: bool = false
 var is_grounded: bool = false
 var underwater: bool = false
 
+var col_count: int = 0
 var swim_counter: int = 0
+var camera_scroll: float = 0.0
 
 const WALK_MAX: float = 1.5
 const WALK_UW_MAX: float = 1.0
@@ -64,6 +67,7 @@ const WATER_HEIGHT: int = 20
 
 
 func _ready() -> void:
+	floor_last_vel = x_velocity
 	set_collision()
 	if !is_grounded:
 		Visual_Node.anim = 2 + is_bigMario
@@ -137,7 +141,11 @@ func _physics_process(_delta: float) -> void:
 	else:
 		water_phys()
 
+	if col_count > 0:
+		col_count -= 1
+
 	camera()
+	print(camera_scroll)
 ## END of _physics_process
 
 
@@ -373,12 +381,14 @@ func do_collisions() -> void:
 			global_position.x += clamp(round(LeftSiHiCol.get_collision_point().x - 1) - global_position.x,-10,2)
 			global_position.x -= 1
 			x_velocity = 0.0
+			col_count = 16
 		return
 	elif LeftSiLoCol.is_colliding():
 		if x_velocity <= 0.0:
 			global_position.x += clamp(round(LeftSiLoCol.get_collision_point().x - 1) - global_position.x,-10,2)
 			global_position.x -= 1
 			x_velocity = 0.0
+			col_count = 16
 		return
 	RightSiHiCol.target_position.x = clamp(x_velocity * 2,2.0,3.0)
 	RightSiLoCol.target_position.x = clamp(x_velocity * 2,2.0,3.0)
@@ -387,12 +397,14 @@ func do_collisions() -> void:
 			global_position.x -= clamp(global_position.x - round(RightSiHiCol.get_collision_point().x - 15),-10,2)
 			global_position.x += 1
 			x_velocity = 0.0
+			col_count = 16
 		return
 	elif RightSiLoCol.is_colliding():
 		if x_velocity >= 0.0:
 			global_position.x -= clamp(global_position.x - round(RightSiLoCol.get_collision_point().x - 15),-10,2)
 			global_position.x += 1
 			x_velocity = 0.0
+			col_count = 16
 		return
 ## END of do_collisions
 
@@ -420,13 +432,27 @@ func set_collision() -> void:
 
 
 func camera() -> void:
-	var cam_move = (global_position.x+16.0) - Camera_Node.global_position.x
-	Camera_Node.global_position.y = 128
+	Camera_Node.global_position.y = 8.0
 
-	if global_position.x+16.0 > Camera_Node.global_position.x:
-		Camera_Node.global_position.x += cam_move
 
-	if global_position.x >= 512:
-		global_position.x -= 512
-		Camera_Node.global_position.x -= 512
+	if int(global_position.x) < Camera_Node.global_position.x + 80.0:
+		camera_scroll = round(global_position.x - Camera_Node.global_position.x)
+		return
+	if col_count:
+		return
+
+	if global_position.x - Camera_Node.global_position.x >= 112.0:
+		Camera_Node.global_position.x = global_position.x - camera_scroll
+	elif x_velocity > 0.0:
+		if x_velocity > 1.0:
+			Camera_Node.global_position.x = Camera_Node.global_position.x + 1.0
+			camera_scroll = round(global_position.x - Camera_Node.global_position.x)
+		else:
+			Camera_Node.global_position.x = global_position.x - camera_scroll
+	else:
+		camera_scroll = round(global_position.x - Camera_Node.global_position.x)
+
+	if global_position.x >= 512.0:
+		global_position.x -= 512.0
+		Camera_Node.global_position.x -= 512.0
 ## END of camera

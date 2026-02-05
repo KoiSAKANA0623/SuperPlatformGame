@@ -1,5 +1,5 @@
 @tool
-@icon("res://Icons/spr_tile_node.svg")
+@icon("res://Icons/spr_tile_node.png")
 extends Sprite2D
 class_name SpriteTile
 

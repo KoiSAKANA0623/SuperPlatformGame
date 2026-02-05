@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3w0fxqvme4tt"
-path="res://.godot/imported/spr_tile_node.svg-926ce56a61c59a1e99ab0adb2bddc586.ctex"
+uid="uid://dbnt3vyd5qojx"
+path="res://.godot/imported/spr_tile_node.png-1f905c5bdde7b54b46f9271309711958.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Icons/spr_tile_node.svg"
-dest_files=["res://.godot/imported/spr_tile_node.svg-926ce56a61c59a1e99ab0adb2bddc586.ctex"]
+source_file="res://Icons/spr_tile_node.png"
+dest_files=["res://.godot/imported/spr_tile_node.png-1f905c5bdde7b54b46f9271309711958.ctex"]
 
 [params]
 
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

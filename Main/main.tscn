@@ -23,7 +23,7 @@ layer = -1
 
 [node name="BGColor" type="ColorRect" parent="BG" unique_id=1999881668]
 offset_right = 256.0
-offset_bottom = 248.0
+offset_bottom = 240.0
 color = Color(0.57254905, 0.5647059, 1, 1)
 
 [node name="FloorTest" type="StaticBody2D" parent="." unique_id=2126844513]

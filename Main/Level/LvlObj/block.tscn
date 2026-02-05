@@ -4,9 +4,29 @@
 
 [node name="Block" type="Node2D" unique_id=421025868]
 
-[node name="Tile" type="TextureRect" parent="." unique_id=1934906770]
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="Tile" type="Sprite2D" parent="." unique_id=1404446002]
 texture = ExtResource("1_pkr5q")
-expand_mode = 1
-stretch_mode = 1
+centered = false
+region_enabled = true
+region_rect = Rect2(32, 88, 8, 8)
+
+[node name="Tile2" type="Sprite2D" parent="." unique_id=156428281]
+position = Vector2(8, 0)
+texture = ExtResource("1_pkr5q")
+centered = false
+region_enabled = true
+region_rect = Rect2(40, 88, 8, 8)
+
+[node name="Tile3" type="Sprite2D" parent="." unique_id=2035474618]
+position = Vector2(0, 8)
+texture = ExtResource("1_pkr5q")
+centered = false
+region_enabled = true
+region_rect = Rect2(48, 88, 8, 8)
+
+[node name="Tile4" type="Sprite2D" parent="." unique_id=1606754964]
+position = Vector2(8, 8)
+texture = ExtResource("1_pkr5q")
+centered = false
+region_enabled = true
+region_rect = Rect2(56, 88, 8, 8)
