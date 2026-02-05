@@ -13,7 +13,7 @@ func _ready() -> void:
 	region_rect = Rect2(0,0,8,8)
 	centered = false
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	material = Global.Pal_Shader
+	material = Global.Pal_Shader.duplicate()
 	pal_line_change()
 ## END of _ready
 

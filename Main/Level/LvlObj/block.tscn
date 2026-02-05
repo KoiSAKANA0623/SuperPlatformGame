@@ -1,32 +1,56 @@
 [gd_scene format=3 uid="uid://de8qi1747lijn"]
 
 [ext_resource type="Texture2D" uid="uid://dm5rs0sx8bygw" path="res://Char/BG.png" id="1_pkr5q"]
+[ext_resource type="Script" uid="uid://boum05st4640t" path="res://Main/Level/LvlObj/block.gd" id="1_sw1e1"]
+[ext_resource type="Shader" uid="uid://b6f6nyhhee76m" path="res://Main/PaletteShad.gdshader" id="2_rqhao"]
+[ext_resource type="Texture2D" uid="uid://ops6qmco7gon" path="res://Palette/TILPal1.png" id="3_l3soj"]
+[ext_resource type="Texture2D" uid="uid://cpwahjdy8li86" path="res://Palette/MainPal.png" id="4_ethky"]
 
-[node name="Block" type="Node2D" unique_id=421025868]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m50v0"]
+shader = ExtResource("2_rqhao")
+shader_parameter/oldP = ExtResource("4_ethky")
+shader_parameter/newP = ExtResource("3_l3soj")
+shader_parameter/precision = 0.1
 
-[node name="Tile" type="Sprite2D" parent="." unique_id=1404446002]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rqhao"]
+size = Vector2(16, 16)
+
+[node name="Block" type="StaticBody2D" unique_id=1893374367]
+script = ExtResource("1_sw1e1")
+
+[node name="Visual" type="Node2D" parent="." unique_id=1635561762]
+
+[node name="Tile" type="Sprite2D" parent="Visual" unique_id=1404446002]
+material = SubResource("ShaderMaterial_m50v0")
 texture = ExtResource("1_pkr5q")
 centered = false
 region_enabled = true
-region_rect = Rect2(32, 88, 8, 8)
+region_rect = Rect2(0, 0, 8, 8)
 
-[node name="Tile2" type="Sprite2D" parent="." unique_id=156428281]
+[node name="Tile2" type="Sprite2D" parent="Visual" unique_id=766609414]
+material = SubResource("ShaderMaterial_m50v0")
 position = Vector2(8, 0)
 texture = ExtResource("1_pkr5q")
 centered = false
 region_enabled = true
-region_rect = Rect2(40, 88, 8, 8)
+region_rect = Rect2(0, 0, 8, 8)
 
-[node name="Tile3" type="Sprite2D" parent="." unique_id=2035474618]
+[node name="Tile3" type="Sprite2D" parent="Visual" unique_id=632286091]
+material = SubResource("ShaderMaterial_m50v0")
 position = Vector2(0, 8)
 texture = ExtResource("1_pkr5q")
 centered = false
 region_enabled = true
-region_rect = Rect2(48, 88, 8, 8)
+region_rect = Rect2(0, 0, 8, 8)
 
-[node name="Tile4" type="Sprite2D" parent="." unique_id=1606754964]
+[node name="Tile4" type="Sprite2D" parent="Visual" unique_id=620947899]
+material = SubResource("ShaderMaterial_m50v0")
 position = Vector2(8, 8)
 texture = ExtResource("1_pkr5q")
 centered = false
 region_enabled = true
-region_rect = Rect2(56, 88, 8, 8)
+region_rect = Rect2(0, 0, 8, 8)
+
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=1317950348]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_rqhao")

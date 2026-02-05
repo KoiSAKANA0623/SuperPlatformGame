@@ -5,6 +5,7 @@ extends Node2D
 @onready var sprite_node = $Sprites
 ## SWITCH OUT WITH FLOOR PATTERN OBJ WHEN FINISHED
 @onready var lvl_object = preload("res://Main/Level/LvlObj/level_object.tscn")
+var inst_lvlob
 
 @export var tileDATA: int = 20513 #5021, 0101000000100001
 @export var bg_palette: String = "9290FF"
@@ -13,6 +14,11 @@ extends Node2D
 func _ready() -> void:
 	load_level()
 ## END of _ready
+
+
+func _process(delta: float) -> void:
+	inst_lvlob.floor_pattern(Global.floor_bit)
+## END of _process
 
 
 func load_level() -> void:
@@ -133,22 +139,19 @@ func load_level() -> void:
 			print("CLOUDS TREES FENCE")
 
 	# checks init floor pattern
-	var floor_bit: int = 0
 	bit_mask = 1 << 3
 	if tileDATA & bit_mask:
-		floor_bit = 8
+		Global.floor_bit = 8
 	bit_mask = 1 << 2
 	if tileDATA & bit_mask:
-		floor_bit = 4
+		Global.floor_bit = 4
 	bit_mask = 1 << 1
 	if tileDATA & bit_mask:
-		floor_bit = 2
+		Global.floor_bit = 2
 	bit_mask = 1 << 0
 	if tileDATA & bit_mask:
-		floor_bit = 1
-	var inst_lvlob = lvl_object.instantiate()
+		Global.floor_bit = 1
+	inst_lvlob = lvl_object.instantiate()
 	level_node.add_child(inst_lvlob)
-	inst_lvlob.floor_pattern(floor_bit)
-
 	return
 ## END of load_level

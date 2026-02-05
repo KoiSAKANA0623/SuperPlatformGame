@@ -145,7 +145,8 @@ func _physics_process(_delta: float) -> void:
 		col_count -= 1
 
 	camera()
-	print(camera_scroll)
+	Global.camera_pos = int(Camera_Node.global_position.x)
+	Global.refresh_line = int(Camera_Node.global_position.x/16)+12
 ## END of _physics_process
 
 
@@ -434,14 +435,14 @@ func set_collision() -> void:
 func camera() -> void:
 	Camera_Node.global_position.y = 8.0
 
-
 	if int(global_position.x) < Camera_Node.global_position.x + 80.0:
 		camera_scroll = round(global_position.x - Camera_Node.global_position.x)
 		return
 	if col_count:
+		camera_scroll = round(global_position.x - Camera_Node.global_position.x)
 		return
 
-	if global_position.x - Camera_Node.global_position.x >= 112.0:
+	if global_position.x - Camera_Node.global_position.x >= 112.0 && x_velocity > 0.0:
 		Camera_Node.global_position.x = global_position.x - camera_scroll
 	elif x_velocity > 0.0:
 		if x_velocity > 1.0:
@@ -450,9 +451,5 @@ func camera() -> void:
 		else:
 			Camera_Node.global_position.x = global_position.x - camera_scroll
 	else:
-		camera_scroll = round(global_position.x - Camera_Node.global_position.x)
-
-	if global_position.x >= 512.0:
-		global_position.x -= 512.0
-		Camera_Node.global_position.x -= 512.0
+		camera_scroll = int(global_position.x - Camera_Node.global_position.x)
 ## END of camera
