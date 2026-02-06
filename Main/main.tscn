@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://deblg8xy6vygc"]
 
 [ext_resource type="Script" uid="uid://cr6ry22wmv4y" path="res://Main/main.gd" id="1_2w1kt"]
-[ext_resource type="PackedScene" uid="uid://yf5ou73givsl" path="res://Main/Objects/Mario/mario.tscn" id="1_yh5la"]
+[ext_resource type="PackedScene" uid="uid://cbjqea15rps1" path="res://Main/Level/LvlObj/floor_pattern_change.tscn" id="2_2w1kt"]
+[ext_resource type="PackedScene" uid="uid://bvjvl1mg6hogm" path="res://Main/Level/LvlObj/hole.tscn" id="3_qvhan"]
 
 [node name="Main" type="Node2D" unique_id=80526666]
 script = ExtResource("1_2w1kt")
@@ -19,8 +20,53 @@ metadata/_edit_lock_ = true
 layer = 0
 follow_viewport_enabled = true
 
+[node name="FloorPatternChange" parent="Level" unique_id=45293311 instance=ExtResource("2_2w1kt")]
+position = Vector2(96, 0)
+new_floor_bit = 2
+
+[node name="FloorPatternChange2" parent="Level" unique_id=1802601260 instance=ExtResource("2_2w1kt")]
+position = Vector2(256, 0)
+new_floor_bit = 13
+
+[node name="FloorPatternChange3" parent="Level" unique_id=2019178581 instance=ExtResource("2_2w1kt")]
+position = Vector2(288, 0)
+new_floor_bit = 3
+
+[node name="FloorPatternChange4" parent="Level" unique_id=234155853 instance=ExtResource("2_2w1kt")]
+position = Vector2(320, 0)
+new_floor_bit = 2
+
+[node name="FloorPatternChange5" parent="Level" unique_id=1557972867 instance=ExtResource("2_2w1kt")]
+position = Vector2(352, 0)
+new_floor_bit = 3
+
+[node name="FloorPatternChange6" parent="Level" unique_id=219066680 instance=ExtResource("2_2w1kt")]
+position = Vector2(416, 0)
+new_floor_bit = 5
+
+[node name="FloorPatternChange7" parent="Level" unique_id=2084589517 instance=ExtResource("2_2w1kt")]
+position = Vector2(448, 0)
+new_floor_bit = 2
+
+[node name="FloorPatternChange8" parent="Level" unique_id=380288647 instance=ExtResource("2_2w1kt")]
+position = Vector2(480, 0)
+new_floor_bit = 3
+
+[node name="FloorPatternChange9" parent="Level" unique_id=1300028425 instance=ExtResource("2_2w1kt")]
+position = Vector2(544, 0)
+new_floor_bit = 2
+
+[node name="FloorPatternChange10" parent="Level" unique_id=1110069915 instance=ExtResource("2_2w1kt")]
+position = Vector2(640, 0)
+new_floor_bit = 3
+
+[node name="FloorPatternChange11" parent="Level" unique_id=2068041768 instance=ExtResource("2_2w1kt")]
+position = Vector2(704, 0)
+new_floor_bit = 2
+
+[node name="Hole" parent="Level" unique_id=447631127 instance=ExtResource("3_qvhan")]
+position = Vector2(704, -16)
+hole_range = 3
+
 [node name="Sprites" type="CanvasLayer" parent="." unique_id=1403044072]
 follow_viewport_enabled = true
-
-[node name="Mario" parent="Sprites" unique_id=753764594 instance=ExtResource("1_yh5la")]
-position = Vector2(0, 112)

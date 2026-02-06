@@ -27,7 +27,6 @@ window/size/viewport_height=224
 window/size/window_width_override=1280
 window/size/window_height_override=1120
 window/stretch/mode="viewport"
-window/vsync/vsync_mode=0
 
 [input]
 

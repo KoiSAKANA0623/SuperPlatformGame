@@ -3,9 +3,59 @@
 [ext_resource type="Script" uid="uid://cirkjcdqb4l21" path="res://Main/Objects/Mario/mario.gd" id="1_8lt1j"]
 [ext_resource type="Script" uid="uid://dniywsmlar4su" path="res://Main/Sprites/sprite_object.gd" id="1_hof7v"]
 [ext_resource type="Script" uid="uid://bunknk0g16tvh" path="res://Main/Sprites/sprite_tile.gd" id="2_aogfe"]
-[ext_resource type="Material" uid="uid://pb41dqmmiyi6" path="res://Main/PaletteMat.tres" id="2_ruk6f"]
 [ext_resource type="Texture2D" uid="uid://cugaits6cfj6r" path="res://Char/SPR.png" id="2_u5l1g"]
+[ext_resource type="Shader" uid="uid://b6f6nyhhee76m" path="res://Main/PaletteShad.gdshader" id="4_xj44l"]
 [ext_resource type="Script" uid="uid://c4c742w3ug3ub" path="res://Main/Objects/Mario/MarioAnim.gd" id="5_3ls6t"]
+[ext_resource type="Texture2D" uid="uid://dkb708e0imlkh" path="res://Palette/SPRPal0.png" id="5_36wje"]
+[ext_resource type="Texture2D" uid="uid://cpwahjdy8li86" path="res://Palette/MainPal.png" id="6_555ad"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qdxkx"]
+shader = ExtResource("4_xj44l")
+shader_parameter/oldP = ExtResource("6_555ad")
+shader_parameter/newP = ExtResource("5_36wje")
+shader_parameter/precision = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dcl0s"]
+shader = ExtResource("4_xj44l")
+shader_parameter/oldP = ExtResource("6_555ad")
+shader_parameter/newP = ExtResource("5_36wje")
+shader_parameter/precision = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w1msq"]
+shader = ExtResource("4_xj44l")
+shader_parameter/oldP = ExtResource("6_555ad")
+shader_parameter/newP = ExtResource("5_36wje")
+shader_parameter/precision = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3rnhe"]
+shader = ExtResource("4_xj44l")
+shader_parameter/oldP = ExtResource("6_555ad")
+shader_parameter/newP = ExtResource("5_36wje")
+shader_parameter/precision = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_58ehn"]
+shader = ExtResource("4_xj44l")
+shader_parameter/oldP = ExtResource("6_555ad")
+shader_parameter/newP = ExtResource("5_36wje")
+shader_parameter/precision = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e688s"]
+shader = ExtResource("4_xj44l")
+shader_parameter/oldP = ExtResource("6_555ad")
+shader_parameter/newP = ExtResource("5_36wje")
+shader_parameter/precision = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_orbhw"]
+shader = ExtResource("4_xj44l")
+shader_parameter/oldP = ExtResource("6_555ad")
+shader_parameter/newP = ExtResource("5_36wje")
+shader_parameter/precision = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hne7b"]
+shader = ExtResource("4_xj44l")
+shader_parameter/oldP = ExtResource("6_555ad")
+shader_parameter/newP = ExtResource("5_36wje")
+shader_parameter/precision = 0.1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8lt1j"]
 size = Vector2(4, 4)
@@ -29,7 +79,7 @@ metadata/_edit_lock_ = true
 
 [node name="SpriteTile" type="Sprite2D" parent="MarioVisual" unique_id=912130169]
 texture_filter = 1
-material = ExtResource("2_ruk6f")
+material = SubResource("ShaderMaterial_qdxkx")
 texture = ExtResource("2_u5l1g")
 centered = false
 region_enabled = true
@@ -39,7 +89,7 @@ metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
 [node name="SpriteTile2" type="Sprite2D" parent="MarioVisual" unique_id=1321517705]
 texture_filter = 1
-material = ExtResource("2_ruk6f")
+material = SubResource("ShaderMaterial_dcl0s")
 position = Vector2(8, 0)
 texture = ExtResource("2_u5l1g")
 centered = false
@@ -50,7 +100,7 @@ metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
 [node name="SpriteTile3" type="Sprite2D" parent="MarioVisual" unique_id=491498065]
 texture_filter = 1
-material = ExtResource("2_ruk6f")
+material = SubResource("ShaderMaterial_w1msq")
 position = Vector2(0, 8)
 texture = ExtResource("2_u5l1g")
 centered = false
@@ -61,7 +111,7 @@ metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
 [node name="SpriteTile4" type="Sprite2D" parent="MarioVisual" unique_id=455786305]
 texture_filter = 1
-material = ExtResource("2_ruk6f")
+material = SubResource("ShaderMaterial_3rnhe")
 position = Vector2(8, 8)
 texture = ExtResource("2_u5l1g")
 centered = false
@@ -72,7 +122,7 @@ metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
 [node name="SpriteTile5" type="Sprite2D" parent="MarioVisual" unique_id=1350911643]
 texture_filter = 1
-material = ExtResource("2_ruk6f")
+material = SubResource("ShaderMaterial_58ehn")
 position = Vector2(0, 16)
 texture = ExtResource("2_u5l1g")
 centered = false
@@ -83,7 +133,7 @@ metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
 [node name="SpriteTile6" type="Sprite2D" parent="MarioVisual" unique_id=1317653179]
 texture_filter = 1
-material = ExtResource("2_ruk6f")
+material = SubResource("ShaderMaterial_e688s")
 position = Vector2(8, 16)
 texture = ExtResource("2_u5l1g")
 centered = false
@@ -94,7 +144,7 @@ metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
 [node name="SpriteTile7" type="Sprite2D" parent="MarioVisual" unique_id=1706747153]
 texture_filter = 1
-material = ExtResource("2_ruk6f")
+material = SubResource("ShaderMaterial_orbhw")
 position = Vector2(0, 24)
 texture = ExtResource("2_u5l1g")
 centered = false
@@ -105,7 +155,7 @@ metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
 [node name="SpriteTile8" type="Sprite2D" parent="MarioVisual" unique_id=200470219]
 texture_filter = 1
-material = ExtResource("2_ruk6f")
+material = SubResource("ShaderMaterial_hne7b")
 position = Vector2(8, 24)
 texture = ExtResource("2_u5l1g")
 centered = false
@@ -116,6 +166,7 @@ script = ExtResource("2_aogfe")
 metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
 [node name="MarioCollision" type="Node2D" parent="." unique_id=629211874]
+metadata/_edit_lock_ = true
 
 [node name="Head" type="RayCast2D" parent="MarioCollision" unique_id=1229112308]
 position = Vector2(8, 4)
@@ -176,3 +227,11 @@ process_callback = 0
 visible = false
 offset_right = 1.0
 offset_bottom = 1.0
+metadata/_edit_lock_ = true
+
+[node name="LvlLoad" type="ColorRect" parent="." unique_id=1597010953]
+top_level = true
+offset_left = -136.0
+offset_right = -120.0
+offset_bottom = 244.0
+color = Color(1, 0, 0, 0.5019608)

@@ -4,20 +4,23 @@ extends Node2D
 @onready var level_node = $Level
 @onready var sprite_node = $Sprites
 ## SWITCH OUT WITH FLOOR PATTERN OBJ WHEN FINISHED
-@onready var lvl_object = preload("res://Main/Level/LvlObj/level_object.tscn")
-var inst_lvlob
-
+@onready var flr_pat = preload("res://Main/Level/LvlObj/level_generator.tscn")
+var inst_flr_pat
+@onready var mario = preload("res://Main/Objects/Mario/mario.tscn")
+## 00 Timer - 000 Mario Start - 000 BG Details - 00 Tiles - 00 Scenary - 0000 Initial Floor Pattern
 @export var tileDATA: int = 20513 #5021, 0101000000100001
 @export var bg_palette: String = "9290FF"
+var mario_start: int = 0
 
 
 func _ready() -> void:
 	load_level()
+	load_sprites()
 ## END of _ready
 
 
 func _process(delta: float) -> void:
-	inst_lvlob.floor_pattern(Global.floor_bit)
+	inst_flr_pat.generate()
 ## END of _process
 
 
@@ -29,10 +32,10 @@ func load_level() -> void:
 	# checks timer
 	var timer_bit: int = 0
 	if tileDATA & bit_mask:
-		timer_bit = 2
+		timer_bit += 2
 	bit_mask = 1 << 14
 	if tileDATA & bit_mask:
-		timer_bit = 1
+		timer_bit += 1
 	match timer_bit:
 		0: # 00
 			print("NO CHANGE")
@@ -44,45 +47,27 @@ func load_level() -> void:
 			print("TIMER 200")
 
 	# checks Mario start pos
-	var mario_bit: int = 0
 	bit_mask = 1 << 13
 	if tileDATA & bit_mask:
-		mario_bit = 4
+		mario_start += 4
 	bit_mask = 1 << 12
 	if tileDATA & bit_mask:
-		mario_bit = 2
+		mario_start += 2
 	bit_mask = 1 << 11
 	if tileDATA & bit_mask:
-		mario_bit = 1
-	match mario_bit:
-		0: # 000
-			print("WATER, Y=0")
-		1: # 001
-			print("UNDERGROUND, Y=32")
-		2: # 010
-			print("OVERWORLD, Y=176")
-		3: # 011
-			print("CASTLE, Y=80")
-		4: # 100
-			print("UNUSED, Y=0")
-		5: # 101
-			print("UNUSED, Y=0")
-		6: # 110
-			print("UNUSED, Y=176")
-		7: # 111
-			print("AUTOWALK, Y=176")
+		mario_start += 1
 
 	# checks background details/color
 	var bg_bit: int = 0
 	bit_mask = 1 << 10
 	if tileDATA & bit_mask:
-		bg_bit = 4
+		bg_bit += 4
 	bit_mask = 1 << 9
 	if tileDATA & bit_mask:
-		bg_bit = 2
+		bg_bit += 2
 	bit_mask = 1 << 8
 	if tileDATA & bit_mask:
-		bg_bit = 1
+		bg_bit += 1
 	match bg_bit:
 		0: # 000
 			print("BG OVERWORLD")
@@ -106,10 +91,10 @@ func load_level() -> void:
 	var tile_bit: int = 0
 	bit_mask = 1 << 7
 	if tileDATA & bit_mask:
-		tile_bit = 2
+		tile_bit += 2
 	bit_mask = 1 << 6
 	if tileDATA & bit_mask:
-		tile_bit = 1
+		tile_bit += 1
 	match tile_bit:
 		0: # 00
 			print("DEFAULT, GREEN PIPE, TREE PLATFORM")
@@ -124,10 +109,10 @@ func load_level() -> void:
 	var scenary_bit: int = 0
 	bit_mask = 1 << 5
 	if tileDATA & bit_mask:
-		scenary_bit = 2
+		scenary_bit += 2
 	bit_mask = 1 << 4
 	if tileDATA & bit_mask:
-		scenary_bit = 1
+		scenary_bit += 1
 	match scenary_bit:
 		0: # 00
 			print("NOTHING")
@@ -141,17 +126,46 @@ func load_level() -> void:
 	# checks init floor pattern
 	bit_mask = 1 << 3
 	if tileDATA & bit_mask:
-		Global.floor_bit = 8
+		Global.floor_bit += 8
 	bit_mask = 1 << 2
 	if tileDATA & bit_mask:
-		Global.floor_bit = 4
+		Global.floor_bit += 4
 	bit_mask = 1 << 1
 	if tileDATA & bit_mask:
-		Global.floor_bit = 2
+		Global.floor_bit += 2
 	bit_mask = 1 << 0
 	if tileDATA & bit_mask:
-		Global.floor_bit = 1
-	inst_lvlob = lvl_object.instantiate()
-	level_node.add_child(inst_lvlob)
+		Global.floor_bit += 1
+	inst_flr_pat = flr_pat.instantiate()
+	level_node.add_child(inst_flr_pat)
 	return
 ## END of load_level
+
+
+func load_sprites() -> void:
+## Mario
+	var inst_mario = mario.instantiate()
+	sprite_node.add_child(inst_mario)
+
+	inst_mario.global_position.x = 40.0
+	match mario_start:
+		0: # WATER, Y=0
+			inst_mario.global_position.y = 0.0
+		1: # UNDERGROUND, Y=32
+			inst_mario.global_position.y = 32.0
+		2: # OVERWORLD, Y=176
+			inst_mario.global_position.y = 176.0
+		3: # CASTLE, Y=80
+			inst_mario.global_position.y = 80.0
+		4: # UNUSED, Y=0
+			inst_mario.global_position.y = 0.0
+		5: # UNUSED, Y=0
+			inst_mario.global_position.y = 0.0
+		6: # UNUSED, Y=176
+			inst_mario.global_position.y = 176.0
+		7: # AUTOWALK, Y=176
+			inst_mario.global_position.y = 176.0
+			inst_mario.control_lock = true
+			inst_mario.cutscene_type = 1
+
+## END of load_sprites

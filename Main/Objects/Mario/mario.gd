@@ -31,11 +31,14 @@ var y_velocity: float = 0.0
 var gravity: float = 0.15625
 var jmp_gravity: float = 0.125
 
-var is_bigMario: int = 0 #9
+var is_bigMario: int = 9 #9
 var is_big_Adder: int = 0
 var is_duck: bool = false
 var is_grounded: bool = false
 var underwater: bool = false
+var enabled: bool = true
+var control_lock: bool = false
+var cutscene_type: int = 0
 
 var col_count: int = 0
 var swim_counter: int = 0
@@ -77,26 +80,34 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	inp_axis = Input.get_axis("Left","Right")
-	if underwater:
-		direction = inp_axis
-	elif inp_axis && is_grounded:
-		direction = inp_axis
+	if !enabled:
+		return
 
-	if is_grounded:
-		if Input.is_action_pressed("Down"):
-			is_duck = true
-			set_collision()
+	if !control_lock:
+		inp_axis = Input.get_axis("Left","Right")
+		if underwater:
+			direction = inp_axis
+		elif inp_axis && is_grounded:
+			direction = inp_axis
+
+		if is_grounded:
+			if Input.is_action_pressed("Down"):
+				is_duck = true
+				set_collision()
+			else:
+				is_duck = false
+				set_collision()
 		else:
 			is_duck = false
-			set_collision()
-	else:
-		is_duck = false
 
-	if Input.is_action_pressed("Run") && is_grounded:
-		running_timer = 10
-	elif running_timer > 0:
-		running_timer -= 1
+		if Input.is_action_pressed("Run") && is_grounded:
+			running_timer = 10
+		elif running_timer > 0:
+			running_timer -= 1
+	else:
+		if cutscene_type != 0:
+			inp_axis = 1.0
+			direction = inp_axis
 
 	# Set Anims
 	if is_grounded:
@@ -146,7 +157,13 @@ func _physics_process(_delta: float) -> void:
 
 	camera()
 	Global.camera_pos = int(Camera_Node.global_position.x)
-	Global.refresh_line = int(Camera_Node.global_position.x/16)+12
+	Global.refresh_line = int(Camera_Node.global_position.x/16)+14
+	$LvlLoad.global_position.x = Global.refresh_line*16
+
+	if global_position.x < Camera_Node.global_position.x:
+		global_position.x = Camera_Node.global_position.x
+		if inp_axis == -1:
+			x_velocity = 0.0
 ## END of _physics_process
 
 
@@ -159,6 +176,8 @@ func ground_phys() -> void:
 			friction = RUN_FRICTION / 256.0
 		else:
 			max_speed = WALK_MAX
+			if cutscene_type == 1:
+				max_speed = WALK_IN_MAX
 			accel = WALK_ACC / 256.0
 			friction = WALK_FRICTION / 256.0
 		if !is_duck:
@@ -232,7 +251,7 @@ func ground_phys() -> void:
 			y_velocity = 4
 	else:
 		y_velocity = 0
-		if Input.is_action_just_pressed("Jump"):
+		if Input.is_action_just_pressed("Jump") && !control_lock:
 			if abs(x_velocity) >= 2.3125:
 				y_velocity = -B_JMP_STRG
 			else:
@@ -325,7 +344,7 @@ func water_phys() -> void:
 			y_velocity = 4
 	else:
 		y_velocity = 0
-	if Input.is_action_just_pressed("Jump"):
+	if Input.is_action_just_pressed("Jump") && !control_lock:
 		if can_swim:
 			y_velocity = -SWIM_STRG
 			gravity = SWIM_GRAVITY
@@ -443,7 +462,7 @@ func camera() -> void:
 		return
 
 	if global_position.x - Camera_Node.global_position.x >= 112.0 && x_velocity > 0.0:
-		Camera_Node.global_position.x = global_position.x - camera_scroll
+		Camera_Node.global_position.x = global_position.x - (camera_scroll)
 	elif x_velocity > 0.0:
 		if x_velocity > 1.0:
 			Camera_Node.global_position.x = Camera_Node.global_position.x + 1.0
