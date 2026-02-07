@@ -1,6 +1,9 @@
 @tool
 extends Node
 
+var FPS: float = 60.0
+var frame_times: Array = []
+
 @onready var CHR_SPR : Texture = preload("res://Char/SPR.png")
 @onready var CHR_BG : Texture = preload("res://Char/BG.png")
 @onready var MainPal : Texture = preload("res://Palette/MainPal.png")
@@ -41,8 +44,9 @@ var floor_pattern_arr: Array = [
 	[1,0,0,0,1,1,1,1,0,0,0,1,1], # 14
 	[1,1,1,1,1,1,1,1,1,1,1,1,1]  # 15
 ]
+var platform_bit: int = 0
 
 
-func _ready() -> void:
-	RenderingServer
+#func _ready() -> void:
+#	RenderingServer
 ## END of _ready

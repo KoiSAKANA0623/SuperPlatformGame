@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://chduoade2twi5"]
+
+[ext_resource type="Script" uid="uid://fylwvtjdpwqm" path="res://Main/Level/LvlObj/LevelGen/level_generator.gd" id="1_8vel6"]
+
+[node name="LevelGenerator" type="Node2D" unique_id=664695887]
+script = ExtResource("1_8vel6")
+lvl_object_type = "LVL_GENERATOR"

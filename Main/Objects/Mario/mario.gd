@@ -112,7 +112,7 @@ func _physics_process(_delta: float) -> void:
 	# Set Anims
 	if is_grounded:
 		if x_velocity:
-			if skidding && abs(x_velocity) > 0.625:
+			if skidding && abs(x_velocity) > 0.625 && !is_duck:
 				Visual_Node.anim = 3 + is_bigMario
 			else:
 				Visual_Node.anim = 2 + is_bigMario
@@ -164,6 +164,8 @@ func _physics_process(_delta: float) -> void:
 		global_position.x = Camera_Node.global_position.x
 		if inp_axis == -1:
 			x_velocity = 0.0
+	if global_position.y > 256:
+		global_position.y = -256
 ## END of _physics_process
 
 

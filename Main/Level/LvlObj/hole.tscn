@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://bvjvl1mg6hogm"]
-
-[ext_resource type="Script" uid="uid://ceenlpkikm4lr" path="res://Main/Level/LvlObj/hole.gd" id="1_3ohy7"]
-
-[node name="Hole" type="Node2D" unique_id=447631127]
-script = ExtResource("1_3ohy7")

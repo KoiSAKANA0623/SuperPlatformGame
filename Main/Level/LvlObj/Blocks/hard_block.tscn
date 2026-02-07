@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://mhufntikilr3"]
+
+[ext_resource type="Script" uid="uid://y11ven5rbxw0" path="res://Main/Level/LvlObj/Blocks/hard_block.gd" id="1_pk03k"]
+
+[node name="HardBlock" type="Node2D" unique_id=1815895200]
+script = ExtResource("1_pk03k")
+lvl_object_type = "HARDBLOCK"

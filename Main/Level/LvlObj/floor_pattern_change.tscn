@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://cbjqea15rps1"]
-
-[ext_resource type="Script" uid="uid://gaayklr2twur" path="res://Main/Level/LvlObj/floor_pattern_change.gd" id="1_r5t32"]
-
-[node name="FloorPatternChange" type="Node2D" unique_id=45293311]
-script = ExtResource("1_r5t32")

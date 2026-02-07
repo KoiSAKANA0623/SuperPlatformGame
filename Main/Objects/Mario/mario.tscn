@@ -9,6 +9,24 @@
 [ext_resource type="Texture2D" uid="uid://dkb708e0imlkh" path="res://Palette/SPRPal0.png" id="5_36wje"]
 [ext_resource type="Texture2D" uid="uid://cpwahjdy8li86" path="res://Palette/MainPal.png" id="6_555ad"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xj44l"]
+shader = ExtResource("4_xj44l")
+shader_parameter/oldP = ExtResource("6_555ad")
+shader_parameter/newP = ExtResource("5_36wje")
+shader_parameter/precision = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_36wje"]
+shader = ExtResource("4_xj44l")
+shader_parameter/oldP = ExtResource("6_555ad")
+shader_parameter/newP = ExtResource("5_36wje")
+shader_parameter/precision = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_555ad"]
+shader = ExtResource("4_xj44l")
+shader_parameter/oldP = ExtResource("6_555ad")
+shader_parameter/newP = ExtResource("5_36wje")
+shader_parameter/precision = 0.1
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qdxkx"]
 shader = ExtResource("4_xj44l")
 shader_parameter/oldP = ExtResource("6_555ad")
@@ -39,24 +57,6 @@ shader_parameter/oldP = ExtResource("6_555ad")
 shader_parameter/newP = ExtResource("5_36wje")
 shader_parameter/precision = 0.1
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e688s"]
-shader = ExtResource("4_xj44l")
-shader_parameter/oldP = ExtResource("6_555ad")
-shader_parameter/newP = ExtResource("5_36wje")
-shader_parameter/precision = 0.1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_orbhw"]
-shader = ExtResource("4_xj44l")
-shader_parameter/oldP = ExtResource("6_555ad")
-shader_parameter/newP = ExtResource("5_36wje")
-shader_parameter/precision = 0.1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hne7b"]
-shader = ExtResource("4_xj44l")
-shader_parameter/oldP = ExtResource("6_555ad")
-shader_parameter/newP = ExtResource("5_36wje")
-shader_parameter/precision = 0.1
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8lt1j"]
 size = Vector2(4, 4)
 
@@ -79,7 +79,7 @@ metadata/_edit_lock_ = true
 
 [node name="SpriteTile" type="Sprite2D" parent="MarioVisual" unique_id=912130169]
 texture_filter = 1
-material = SubResource("ShaderMaterial_qdxkx")
+material = SubResource("ShaderMaterial_xj44l")
 texture = ExtResource("2_u5l1g")
 centered = false
 region_enabled = true
@@ -89,7 +89,7 @@ metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
 [node name="SpriteTile2" type="Sprite2D" parent="MarioVisual" unique_id=1321517705]
 texture_filter = 1
-material = SubResource("ShaderMaterial_dcl0s")
+material = SubResource("ShaderMaterial_36wje")
 position = Vector2(8, 0)
 texture = ExtResource("2_u5l1g")
 centered = false
@@ -100,7 +100,7 @@ metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
 [node name="SpriteTile3" type="Sprite2D" parent="MarioVisual" unique_id=491498065]
 texture_filter = 1
-material = SubResource("ShaderMaterial_w1msq")
+material = SubResource("ShaderMaterial_555ad")
 position = Vector2(0, 8)
 texture = ExtResource("2_u5l1g")
 centered = false
@@ -111,7 +111,7 @@ metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
 [node name="SpriteTile4" type="Sprite2D" parent="MarioVisual" unique_id=455786305]
 texture_filter = 1
-material = SubResource("ShaderMaterial_3rnhe")
+material = SubResource("ShaderMaterial_qdxkx")
 position = Vector2(8, 8)
 texture = ExtResource("2_u5l1g")
 centered = false
@@ -122,7 +122,7 @@ metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
 [node name="SpriteTile5" type="Sprite2D" parent="MarioVisual" unique_id=1350911643]
 texture_filter = 1
-material = SubResource("ShaderMaterial_58ehn")
+material = SubResource("ShaderMaterial_dcl0s")
 position = Vector2(0, 16)
 texture = ExtResource("2_u5l1g")
 centered = false
@@ -133,7 +133,7 @@ metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
 [node name="SpriteTile6" type="Sprite2D" parent="MarioVisual" unique_id=1317653179]
 texture_filter = 1
-material = SubResource("ShaderMaterial_e688s")
+material = SubResource("ShaderMaterial_w1msq")
 position = Vector2(8, 16)
 texture = ExtResource("2_u5l1g")
 centered = false
@@ -144,7 +144,7 @@ metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
 [node name="SpriteTile7" type="Sprite2D" parent="MarioVisual" unique_id=1706747153]
 texture_filter = 1
-material = SubResource("ShaderMaterial_orbhw")
+material = SubResource("ShaderMaterial_3rnhe")
 position = Vector2(0, 24)
 texture = ExtResource("2_u5l1g")
 centered = false
@@ -155,7 +155,7 @@ metadata/_custom_type_script = "uid://bunknk0g16tvh"
 
 [node name="SpriteTile8" type="Sprite2D" parent="MarioVisual" unique_id=200470219]
 texture_filter = 1
-material = SubResource("ShaderMaterial_hne7b")
+material = SubResource("ShaderMaterial_58ehn")
 position = Vector2(8, 24)
 texture = ExtResource("2_u5l1g")
 centered = false

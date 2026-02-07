@@ -1,83 +1,92 @@
 extends Node
 class_name Block_Tilemap
 
+var tile_map: Dictionary = {
 ## OVERWORLD tileset
-var GROUND_Tile: Array = [4,11,5,11,6,11,7,11]
-var BTREE_00_Tile: Array = [11,4,13,4,12,4,14,4]
-var BTREE_01_Tile: Array = [13,4,13,4,15,4,15,4]
-var BTREE_02_Tile: Array = [13,4,0,5,14,4,1,5]
-var BTREE_03_Tile: Array = [2,5,2,5,2,5,2,5]
-var MUSHROOM_00_Tile: Array = [11,6,12,2,0,7,13,2]
-var MUSHROOM_01_Tile: Array = [12,6,13,6,1,7,2,7]
-var MUSHROOM_02_Tile: Array = [14,6,15,6,3,7,4,7]
-var MUSHROOM_03_Tile: Array = [5,7,6,7,10,11,11,11]
-var MUSHROOM_04_Tile: Array = [10,11,11,11,10,11,11,11]
-var CLOUD_Tile: Array = [0,11,2,11,1,11,3,11]
-var BRIDGE_00_Tile: Array = [1,12,1,12,4,2,4,2]
-var BRIDGE_01_Tile: Array = [4,2,4,2,0,12,0,12]
-var BULLET_00_Tile: Array = [6,12,7,12,8,12,9,12]
-var BULLET_01_Tile: Array = [10,12,11,12,12,12,13,12]
-var BULLET_02_Tile: Array = [10,2,0,4,10,2,0,4]
-var PULLEY_00_Tile: Array = [4,2,14,3,2,10,15,3]
-var PULLEY_01_Tile: Array = [9,9,9,9,4,2,4,2]
-var PULLEY_02_Tile: Array = [11,5,4,2,12,5,3,10]
-var PULLEY_03_Tile: Array = [2,10,3,10,2,10,3,10]
+	"GROUND": [4,11,5,11,6,11,7,11,  1],
+	"BTREE_00": [11,4,13,4,12,4,14,4, 0],
+	"BTREE_01": [13,4,13,4,15,4,15,4, 0],
+	"BTREE_02": [13,4,0,5,14,4,1,5,   0],
+	"BTREE_03": [2,5,2,5,2,5,2,5,     1],
+	"MUSHROOM_00": [11,6,12,2,0,7,13,2,       0],
+	"MUSHROOM_01": [12,6,13,6,1,7,2,7,        0],
+	"MUSHROOM_02": [14,6,15,6,3,7,4,7,        0],
+	"MUSHROOM_03": [5,7,6,7,10,11,11,11,      1],
+	"MUSHROOM_04": [10,11,11,11,10,11,11,11,  1],
+	"CLOUD": [0,11,2,11,1,11,3,11,  2],
+	"BRIDGE_00": [1,12,1,12,4,2,4,2, 1],
+	"BRIDGE_01": [4,2,4,2,0,12,0,12, 0],
+	"BULLET_00": [6,12,7,12,8,12,9,12,     1],
+	"BULLET_01": [10,12,11,12,12,12,13,12, 1],
+	"BULLET_02": [10,2,0,4,10,2,0,4,       1],
+	"PULLEY_00": [4,2,14,3,2,10,15,3,  1],
+	"PULLEY_01": [9,9,9,9,4,2,4,2,     1],
+	"PULLEY_02": [11,5,4,2,12,5,3,10,  1],
+	"PULLEY_03": [2,10,3,10,2,10,3,10, 1],
 
 ## UNDERWATER tileset
-var UNDERWATER_Tile: Array = [2,8,4,8,3,8,5,8]
-var COIN_UW_Tile: Array = [2,12,3,12,4,12,5,12]
-var CORAL_Tile: Array = [4,10,10,14,9,14,11,14]
-var WATER_SURFACE_Tile: Array = [1,4,1,4,6,2,6,2]
-var WATER_Tile: Array = [6,2,6,2,6,2,6,2]
+	"UNDERWATER":[2,8,4,8,3,8,5,8, 1],
+	"COIN_UW": [2,12,3,12,4,12,5,12, 3],
+	"CORAL": [4,10,10,14,9,14,11,14, 0],
+	"WATER_SURFACE": [1,4,1,4,6,2,6,2, 2],
+	"WATER": [6,2,6,2,6,2,6,2,         2],
+	"PIPE_UW_00": [6,8,7,8,10,8,11,8, 1],
+	"PIPE_UW_01": [14,8,15,8,1,9,2,9, 1],
 
 ## CASTLE tileset
-var CASTLE_Tile: Array = [13,5,13,5,14,5,14,5]
-var AXE_Tile: Array = [11,7,12,7,13,7,14,7]
-var CHAIN_Tile: Array = [4,2,15,7,15,7,4,2]
-var CH_BRIDGE_Tile: Array = [7,7,7,7,9,7,9,7]
+	"CASTLE": [13,5,13,5,14,5,14,5, 1],
+	"AXE": [11,7,12,7,13,7,14,7, 3],
+	"CHAIN": [4,2,15,7,15,7,4,2, 0],
+	"CH_BRIDGE": [7,7,7,7,9,7,9,7,  2],
 
 ## GENERAL tileset
-var BLOCK_Tile: Array = [11,10,13,10,12,10,14,10]
-var BRICK_HI_Tile: Array = [5,4,5,4,7,4,7,4]
-var BRICK_Tile: Array = [7,4,7,4,7,4,7,4]
-var Q_BLOCK_Tile: Array = [3,5,4,5,5,5,6,5]
-var EMPTY_BLOCK_Tile: Array = [7,5,8,5,9,5,10,5]
-var COIN_Tile: Array = [5,10,6,10,7,10,8,10]
-var PIPE_00_Tile: Array = [0,6,1,6,4,6,5,6]
-var PIPE_01_Tile: Array = [2,6,3,6,6,6,7,6]
-var PIPE_02_Tile: Array = [8,6,9,6,8,6,9,6]
-var PIPE_03_Tile: Array = [6,2,10,6,6,2,10,6]
-var PIPE_04_Tile: Array = [6,8,7,8,10,8,11,8]
-var PIPE_05_Tile: Array = [14,8,15,8,1,9,2,9]
-var PIPE_06_Tile: Array = [8,8,8,8,12,8,12,8]
-var PIPE_07_Tile: Array = [6,2,6,2,3,9,3,9]
-var PIPE_08_Tile: Array = [9,8,9,6,13,8,9,6]
-var PIPE_09_Tile: Array = [0,9,9,6,4,9,9,6]
-var POLETOP_Tile: Array = [4,2,4,2,15,2,13,3]
+	"HARDBLOCK": [11,10,13,10,12,10,14,10, 1],
+	"BRICK_HI": [5,4,5,4,7,4,7,4, 1],
+	"BRICK": [7,4,7,4,7,4,7,4,    1],
+	"Q_BLOCK": [3,5,4,5,5,5,6,5,  3],
+	"EMPTY_BLOCK": [7,5,8,5,9,5,10,5, 1],
+	"COIN": [5,10,6,10,7,10,8,10, 3],
+	"PIPE_00": [0,6,1,6,4,6,5,6,   0],
+	"PIPE_01": [2,6,3,6,6,6,7,6,   0],
+	"PIPE_02": [8,6,9,6,8,6,9,6,   0],
+	"PIPE_03": [6,2,10,6,6,2,10,6, 0],
+	"PIPE_04": [6,8,7,8,10,8,11,8, 0],
+	"PIPE_05": [14,8,15,8,1,9,2,9, 0],
+	"PIPE_06": [8,8,8,8,12,8,12,8, 0],
+	"PIPE_07": [6,2,6,2,3,9,3,9,   0],
+	"PIPE_08": [9,8,9,6,13,8,9,6,  0],
+	"PIPE_09": [0,9,9,6,4,9,9,6,   0],
+	"POLETOP": [4,2,4,2,15,2,13,3, 0],
+	"POLE": [2,10,3,10,2,10,3,10, 0],
 
 ## BACKGROUND ELEMENTS tileset
-var BG_BUSH_00_Tile: Array = [4,2,4,2,4,2,5,3]
-var BG_BUSH_01_Tile: Array = [6,3,7,3,5,2,5,2]
-var BG_BUSH_02_Tile: Array = [4,2,4,2,8,3,4,2]
-var BG_CLOUD_00_Tile: Array = [4,2,9,3,4,2,4,2]
-var BG_CLOUD_01_Tile: Array = [10,3,11,3,4,2,4,2]
-var BG_CLOUD_02_Tile: Array = [12,3,4,2,4,2,4,2]
-var BG_TREE_00_Tile: Array = [14,11,15,11,14,11,15,11]
-var BG_TREE_01_Tile: Array = [8,11,9,11,12,11,13,11]
-var BG_TREE_02_Tile: Array = [8,11,9,11,10,11,11,11]
-var BG_TREE_03_Tile: Array = [10,11,11,11,12,11,13,11]
-var BG_FENCE_Tile: Array = [0,8,1,8,0,10,1,10]
-var BG_MOUNT_00_Tile: Array = [4,2,0,3,0,3,6,2]
-var BG_MOUNT_01_Tile: Array = [6,2,4,3,6,2,6,2]
-var BG_MOUNT_02_Tile: Array = [6,2,6,2,6,2,6,2]
-var BG_MOUNT_03_Tile: Array = [4,3,6,2,6,2,6,2]
-var BG_MOUNT_04_Tile: Array = [3,3,4,2,6,2,3,3]
-var BG_MOUNT_05_Tile: Array = [4,2,4,2,1,3,2,3]
+	"BG_BUSH_00": [4,2,4,2,4,2,5,3,  0],
+	"BG_BUSH_01": [6,3,7,3,5,2,5,2,  0],
+	"BG_BUSH_02": [4,2,4,2,8,3,4,2,  0],
+	"BG_CLOUD_00": [4,2,4,2,4,2,5,3,   2],
+	"BG_CLOUD_01": [6,3,7,3,5,2,5,2,   2],
+	"BG_CLOUD_02": [4,2,4,2,8,3,4,2,   2],
+	"BG_CLOUD_03": [4,2,9,3,4,2,4,2,   2],
+	'BG_CLOUD_04': [10,3,11,3,4,2,4,2, 2],
+	"BG_CLOUD_05": [12,3,4,2,4,2,4,2,  2],
+	"BG_TREE_00": [14,11,15,11,14,11,15,11,  1],
+	"BG_TREE_01": [8,11,9,11,12,11,13,11,    0],
+	"BG_TREE_02": [8,11,9,11,10,11,11,11,    0],
+	"BG_TREE_03": [10,11,11,11,12,11,13,11,  0],
+	"BG_FENCE": [0,8,1,8,0,10,1,10,  1],
+	"BG_MOUNT_00": [4,2,0,3,0,3,6,2,  0],
+	"BG_MOUNT_01": [6,2,4,3,6,2,6,2,  0],
+	"BG_MOUNT_02": [6,2,6,2,6,2,6,2,  0],
+	"BG_MOUNT_03": [4,3,6,2,6,2,6,2,  0],
+	"BG_MOUNT_04": [3,3,4,2,6,2,3,3,  0],
+	"BG_MOUNT_05": [4,2,4,2,1,3,2,3,  0],
 
 ## END CASTLE tileset
-var E_CASTLE_00_Tile: Array = [13,9,14,9,7,4,7,4]
-var E_CASTLE_01_Tile: Array = [9,10,10,10,7,4,7,4]
-var E_CASTLE_02_Tile: Array = [7,4,7,2,7,4,7,2]
-var E_CASTLE_03_Tile: Array = [7,2,7,4,7,2,7,4]
-var E_CASTLE_04_Tile: Array = [7,2,7,2,7,2,7,2]
-var E_CASTLE_05_Tile: Array = [11,9,12,9,7,2,7,2]
+	"E_CASTLE_00": [13,9,14,9,7,4,7,4,   1],
+	"E_CASTLE_01": [9,10,10,10,7,4,7,4,  1],
+	"E_CASTLE_02": [7,4,7,2,7,4,7,2,     1],
+	"E_CASTLE_03": [7,4,7,4,7,4,7,4,     1],
+	"E_CASTLE_04": [7,2,7,4,7,2,7,4,     1],
+	"E_CASTLE_05": [7,2,7,2,7,2,7,2,     1],
+	"E_CASTLE_06": [11,9,12,9,7,2,7,2,   1]
+}
