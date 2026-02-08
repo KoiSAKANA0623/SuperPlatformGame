@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bcvmt5urbdnid"]
+
+[ext_resource type="Script" uid="uid://bcwi5ek4pevfh" path="res://Main/Level/LvlObj/Blocks/pipe.gd" id="1_ku3i6"]
+
+[node name="Pipe" type="Node2D" unique_id=1381621332]
+script = ExtResource("1_ku3i6")
+lvl_object_type = "PIPE"

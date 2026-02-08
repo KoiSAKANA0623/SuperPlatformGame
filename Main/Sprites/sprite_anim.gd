@@ -51,7 +51,7 @@ func animate(anim) -> void:
 
 func editor_sprite() -> void:
 	var tileframes: Array
-	tileframes.push_back([0,0,false,false,true])
+	tileframes.push_back([0,0,false,false])
 	edit_frame.append_array(tileframes)
 	tileframes.clear()
 ## END of editor_sprite

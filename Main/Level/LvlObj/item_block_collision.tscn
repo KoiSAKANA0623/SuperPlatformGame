@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://b2ujyh05s5gvs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f8fll"]
+size = Vector2(15, 15)
+
+[node name="item_block_collision" type="Area2D" unique_id=1773097298 groups=["ItemHit"]]
+
+[node name="Area2D" type="CollisionShape2D" parent="." unique_id=927162663]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_f8fll")
+debug_color = Color(0.7369039, 0.4691949, 1.92523e-07, 0.41960785)

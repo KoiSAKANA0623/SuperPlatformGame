@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bm4hloh0fo2s2"]
+
+[ext_resource type="Script" uid="uid://drepbmrkjm1c0" path="res://Main/Level/LvlObj/Blocks/camera_lock.gd" id="1_s50dv"]
+
+[node name="CameraLock" type="Node2D" unique_id=1152437868]
+script = ExtResource("1_s50dv")
+lvl_object_type = "CAMERA_LOCK"

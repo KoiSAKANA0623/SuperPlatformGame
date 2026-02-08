@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://dqogerrn72dbo"]
+
+[ext_resource type="Script" uid="uid://brh518a8uod2g" path="res://Main/Objects/Bump_Block/bump_anim.gd" id="1_68ck8"]
+[ext_resource type="Script" uid="uid://obsmga1mlnlf" path="res://Main/Objects/Bump_Block/bump_block.gd" id="1_d4d8r"]
+[ext_resource type="Script" uid="uid://dniywsmlar4su" path="res://Main/Sprites/sprite_object.gd" id="1_lmb4o"]
+[ext_resource type="Shader" uid="uid://b6f6nyhhee76m" path="res://Main/PaletteShad.gdshader" id="2_68ck8"]
+[ext_resource type="Texture2D" uid="uid://c106snm6c8ufe" path="res://Palette/SPRPal7.png" id="4_68ck8"]
+[ext_resource type="Texture2D" uid="uid://cpwahjdy8li86" path="res://Palette/MainPal.png" id="4_n3nn8"]
+[ext_resource type="Texture2D" uid="uid://cugaits6cfj6r" path="res://Char/SPR.png" id="5_x8v62"]
+[ext_resource type="Script" uid="uid://bunknk0g16tvh" path="res://Main/Sprites/sprite_tile.gd" id="6_1kxap"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d4d8r"]
+shader = ExtResource("2_68ck8")
+shader_parameter/oldP = ExtResource("4_n3nn8")
+shader_parameter/newP = ExtResource("4_68ck8")
+shader_parameter/precision = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n3nn8"]
+shader = ExtResource("2_68ck8")
+shader_parameter/oldP = ExtResource("4_n3nn8")
+shader_parameter/newP = ExtResource("4_68ck8")
+shader_parameter/precision = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x8v62"]
+shader = ExtResource("2_68ck8")
+shader_parameter/oldP = ExtResource("4_n3nn8")
+shader_parameter/newP = ExtResource("4_68ck8")
+shader_parameter/precision = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1kxap"]
+shader = ExtResource("2_68ck8")
+shader_parameter/oldP = ExtResource("4_n3nn8")
+shader_parameter/newP = ExtResource("4_68ck8")
+shader_parameter/precision = 0.1
+
+[node name="BumpBlock" type="Node2D" unique_id=253424049]
+script = ExtResource("1_d4d8r")
+
+[node name="BumpAnim" type="Node" parent="." unique_id=1705616204 node_paths=PackedStringArray("spr_object")]
+script = ExtResource("1_68ck8")
+spr_object = NodePath("../SpriteObject")
+
+[node name="SpriteObject" type="Node2D" parent="." unique_id=796592924 node_paths=PackedStringArray("animation")]
+script = ExtResource("1_lmb4o")
+animation = NodePath("../BumpAnim")
+metadata/_custom_type_script = "uid://dniywsmlar4su"
+
+[node name="SpriteTile" type="Sprite2D" parent="SpriteObject" unique_id=2016926017]
+texture_filter = 1
+material = SubResource("ShaderMaterial_d4d8r")
+texture = ExtResource("5_x8v62")
+centered = false
+region_enabled = true
+region_rect = Rect2(56, 64, 8, 8)
+script = ExtResource("6_1kxap")
+palInt = 3
+metadata/_custom_type_script = "uid://bunknk0g16tvh"
+
+[node name="SpriteTile2" type="Sprite2D" parent="SpriteObject" unique_id=1420340092]
+texture_filter = 1
+material = SubResource("ShaderMaterial_n3nn8")
+position = Vector2(8, 0)
+texture = ExtResource("5_x8v62")
+centered = false
+flip_h = true
+region_enabled = true
+region_rect = Rect2(56, 64, 8, 8)
+script = ExtResource("6_1kxap")
+palInt = 3
+metadata/_custom_type_script = "uid://bunknk0g16tvh"
+
+[node name="SpriteTile3" type="Sprite2D" parent="SpriteObject" unique_id=645426737]
+texture_filter = 1
+material = SubResource("ShaderMaterial_x8v62")
+position = Vector2(0, 8)
+texture = ExtResource("5_x8v62")
+centered = false
+flip_v = true
+region_enabled = true
+region_rect = Rect2(56, 64, 8, 8)
+script = ExtResource("6_1kxap")
+palInt = 3
+metadata/_custom_type_script = "uid://bunknk0g16tvh"
+
+[node name="SpriteTile4" type="Sprite2D" parent="SpriteObject" unique_id=1452813921]
+texture_filter = 1
+material = SubResource("ShaderMaterial_1kxap")
+position = Vector2(8, 8)
+texture = ExtResource("5_x8v62")
+centered = false
+flip_h = true
+flip_v = true
+region_enabled = true
+region_rect = Rect2(56, 64, 8, 8)
+script = ExtResource("6_1kxap")
+palInt = 3
+metadata/_custom_type_script = "uid://bunknk0g16tvh"

@@ -18,6 +18,14 @@ func _ready() -> void:
 ## END of _ready
 
 
+func _process(_delta: float) -> void:
+	if global_position.x < Global.camera_pos:
+		visible = false
+	else:
+		visible = true
+## END of _process
+
+
 func tile_change(x, y, flX, flY) -> void:
 	region_rect.position.x = x * 8
 	region_rect.position.y = y * 8

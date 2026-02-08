@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://rpirdjhdfom4"]
+
+[ext_resource type="Script" uid="uid://ci7totvp4eja7" path="res://Main/Level/LvlObj/Blocks/staircase.gd" id="1_rjcpo"]
+
+[node name="Staircase" type="Node2D" unique_id=280057476]
+script = ExtResource("1_rjcpo")
+lvl_object_type = "STAIRCASE"

@@ -31,7 +31,7 @@ var y_velocity: float = 0.0
 var gravity: float = 0.15625
 var jmp_gravity: float = 0.125
 
-var is_bigMario: int = 9 #9
+var is_bigMario: int = 0 #9
 var is_big_Adder: int = 0
 var is_duck: bool = false
 var is_grounded: bool = false
@@ -43,6 +43,8 @@ var cutscene_type: int = 0
 var col_count: int = 0
 var swim_counter: int = 0
 var camera_scroll: float = 0.0
+
+var block_bounce: int = 0
 
 const WALK_MAX: float = 1.5
 const WALK_UW_MAX: float = 1.0
@@ -152,18 +154,31 @@ func _physics_process(_delta: float) -> void:
 	else:
 		water_phys()
 
+	Global.mario_pos = global_position
+
 	if col_count > 0:
 		col_count -= 1
 
+	if is_bigMario:
+		Global.mario_big = true
+	else:
+		Global.mario_big = false
+
 	camera()
 	Global.camera_pos = int(Camera_Node.global_position.x)
-	Global.refresh_line = int(Camera_Node.global_position.x/16)+14
+	Global.refresh_line = int(Camera_Node.global_position.x/16)+24
 	$LvlLoad.global_position.x = Global.refresh_line*16
 
 	if global_position.x < Camera_Node.global_position.x:
 		global_position.x = Camera_Node.global_position.x
 		if inp_axis == -1:
 			x_velocity = 0.0
+	elif global_position.x > Camera_Node.global_position.x + 240:
+		global_position.x = Camera_Node.global_position.x + 240
+		if inp_axis == 1:
+			x_velocity = 0.0
+
+	# TEST
 	if global_position.y > 256:
 		global_position.y = -256
 ## END of _physics_process
@@ -361,6 +376,8 @@ func water_phys() -> void:
 
 
 func do_collisions() -> void:
+	if block_bounce > 0:
+		block_bounce -= 1
 # Ceiling Collision
 	TopBlock_Check.global_position.x = round(global_position.x/16)*16 + 8
 	TopBlock_Check.global_position.y = round(global_position.y/16)*16 - 8 + is_big_Adder
@@ -368,6 +385,10 @@ func do_collisions() -> void:
 	HeadCol.target_position.y = vel_clamp
 	if y_velocity < 0.0:
 		if HeadCol.is_colliding() && TopBlock_Check.get_overlapping_bodies():
+			if TopBlock_Check.has_overlapping_areas():
+				if TopBlock_Check.get_overlapping_areas()[0].is_in_group("ItemHit") && !block_bounce:
+					TopBlock_Check.get_overlapping_areas()[0].get_parent().check_hit()
+					block_bounce = 15
 			y_velocity = 1.0
 # Floor Collision
 	BottomBlock_Check.global_position.x = ceil(global_position.x) + 8
@@ -454,6 +475,11 @@ func set_collision() -> void:
 
 
 func camera() -> void:
+	if Global.lock_cam:
+		Camera_Node.global_position.x = int(Camera_Node.global_position.x/16)*16
+		camera_scroll = round(global_position.x - Camera_Node.global_position.x)
+		return
+
 	Camera_Node.global_position.y = 8.0
 
 	if int(global_position.x) < Camera_Node.global_position.x + 80.0:

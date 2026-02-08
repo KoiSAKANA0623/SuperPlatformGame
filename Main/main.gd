@@ -24,6 +24,8 @@ var bit_mask: int = 1 << 15
 
 
 func _ready() -> void:
+	Global.main_level_n = level_node
+	Global.main_sprit_n = sprite_node
 	edit_tiles = $EditorTiles
 	load_level()
 	if Engine.is_editor_hint():

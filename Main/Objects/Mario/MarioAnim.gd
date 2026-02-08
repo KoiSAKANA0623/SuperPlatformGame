@@ -1,5 +1,5 @@
 @tool
-extends "res://Main/Sprites/sprite_anim.gd"
+extends SpriteAnim
 
 @export var spr_object: SpriteObject
 
@@ -654,14 +654,14 @@ func animate(anim) -> void:
 
 func editor_sprite() -> void:
 	var tileframes: Array
-	tileframes.push_back([12,15,false,false,true])
-	tileframes.push_back([12,15,false,false,true])
-	tileframes.push_back([12,15,false,false,true])
-	tileframes.push_back([12,15,false,false,true])
-	tileframes.push_back([10,3,false,false,true])
-	tileframes.push_back([7,3,false,false,true])
-	tileframes.push_back([15,4,false,false,true])
-	tileframes.push_back([15,4,true,false,true])
+	tileframes.push_back([12,15,false,false])
+	tileframes.push_back([12,15,false,false])
+	tileframes.push_back([12,15,false,false])
+	tileframes.push_back([12,15,false,false])
+	tileframes.push_back([10,3,false,false])
+	tileframes.push_back([7,3,false,false])
+	tileframes.push_back([15,4,false,false])
+	tileframes.push_back([15,4,true,false])
 	edit_frame.append_array(tileframes)
 	tileframes.clear()
 ## END of editor_sprite

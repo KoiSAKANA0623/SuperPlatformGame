@@ -13,12 +13,12 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		set_sprite_edit()
 		return
+	animation.animate(anim)
 ## END of _ready
 
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
-	#	set_sprite_edit()
 		return
 
 	if animation:
@@ -40,7 +40,7 @@ func _physics_process(delta: float) -> void:
 
 func set_sprite() -> void:
 	var spr_frame = animation.frames
-	var frame_add = animation.true_frame * 8
+	var frame_add = animation.true_frame * get_child_count()
 	for i in get_children():
 		var indx = i.get_index()
 		if spr_frame[indx+frame_add][4] == true:

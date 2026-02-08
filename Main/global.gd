@@ -4,6 +4,9 @@ extends Node
 var FPS: float = 60.0
 var frame_times: Array = []
 
+var main_level_n
+var main_sprit_n
+
 @onready var CHR_SPR : Texture = preload("res://Char/SPR.png")
 @onready var CHR_BG : Texture = preload("res://Char/BG.png")
 @onready var MainPal : Texture = preload("res://Palette/MainPal.png")
@@ -21,9 +24,11 @@ var SPRPal1 : Texture = preload("res://Palette/SPRPal3.png")
 var SPRPal2 : Texture = preload("res://Palette/SPRPal4.png")
 var SPRPal3 : Texture = preload("res://Palette/SPRPal5.png")
 
-var camera_pos : int = 0.0
-
+var camera_pos : float = 0.0
 var refresh_line: int = 12
+var mario_pos : Vector2 = Vector2(0,0)
+var mario_big : bool = false
+var lock_cam : bool = false
 
 var floor_bit: int = 0
 var floor_pattern_arr: Array = [

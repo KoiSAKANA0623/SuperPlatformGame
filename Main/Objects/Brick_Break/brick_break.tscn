@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://dj0fqknwox5jt"]
+
+[ext_resource type="Script" uid="uid://d4bc0a0gfusmm" path="res://Main/Objects/Brick_Break/brick_break.gd" id="1_288wh"]
+[ext_resource type="Script" uid="uid://dniywsmlar4su" path="res://Main/Sprites/sprite_object.gd" id="1_ubrx3"]
+[ext_resource type="Shader" uid="uid://b6f6nyhhee76m" path="res://Main/PaletteShad.gdshader" id="2_288wh"]
+[ext_resource type="Script" uid="uid://b81a6by2ulftu" path="res://Main/Objects/Brick_Break/brick_anim.gd" id="2_gp6jt"]
+[ext_resource type="Texture2D" uid="uid://cpwahjdy8li86" path="res://Palette/MainPal.png" id="4_eorqb"]
+[ext_resource type="Texture2D" uid="uid://c106snm6c8ufe" path="res://Palette/SPRPal7.png" id="5_gp6jt"]
+[ext_resource type="Texture2D" uid="uid://cugaits6cfj6r" path="res://Char/SPR.png" id="5_uvjag"]
+[ext_resource type="Script" uid="uid://bunknk0g16tvh" path="res://Main/Sprites/sprite_tile.gd" id="6_6qoyn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gp6jt"]
+shader = ExtResource("2_288wh")
+shader_parameter/oldP = ExtResource("4_eorqb")
+shader_parameter/newP = ExtResource("5_gp6jt")
+shader_parameter/precision = 0.1
+
+[node name="BrickBreak" type="Node2D" unique_id=1093671304]
+script = ExtResource("1_288wh")
+
+[node name="BrickAnim" type="Node" parent="." unique_id=984250303 node_paths=PackedStringArray("spr_object")]
+script = ExtResource("2_gp6jt")
+spr_object = NodePath("../BrickVisuals")
+
+[node name="BrickVisuals" type="Node2D" parent="." unique_id=679702904 node_paths=PackedStringArray("animation")]
+script = ExtResource("1_ubrx3")
+animation = NodePath("../BrickAnim")
+metadata/_custom_type_script = "uid://dniywsmlar4su"
+
+[node name="SpriteTile" type="Sprite2D" parent="BrickVisuals" unique_id=1540613347]
+texture_filter = 1
+material = SubResource("ShaderMaterial_gp6jt")
+texture = ExtResource("5_uvjag")
+centered = false
+region_enabled = true
+region_rect = Rect2(32, 64, 8, 8)
+script = ExtResource("6_6qoyn")
+palInt = 3
+metadata/_custom_type_script = "uid://bunknk0g16tvh"

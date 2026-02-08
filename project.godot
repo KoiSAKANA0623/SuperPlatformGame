@@ -28,6 +28,11 @@ window/size/window_width_override=1280
 window/size/window_height_override=1120
 window/stretch/mode="viewport"
 
+[global_group]
+
+ItemHit="The area that detects when Mario hits a ?Block or Bricks"
+Player_Head="Detects if player hits bottom of block"
+
 [input]
 
 Up={

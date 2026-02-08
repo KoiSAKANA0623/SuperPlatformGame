@@ -12,10 +12,7 @@ shader_parameter/oldP = ExtResource("4_ethky")
 shader_parameter/newP = ExtResource("3_l3soj")
 shader_parameter/precision = 0.1
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rqhao"]
-size = Vector2(16, 16)
-
-[node name="Block" type="StaticBody2D" unique_id=1893374367]
+[node name="Block" type="Node2D" unique_id=1635348266]
 script = ExtResource("1_sw1e1")
 
 [node name="Visual" type="Node2D" parent="." unique_id=1635561762]
@@ -50,7 +47,3 @@ texture = ExtResource("1_pkr5q")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 8, 8)
-
-[node name="Collision" type="CollisionShape2D" parent="." unique_id=1317950348]
-position = Vector2(8, 8)
-shape = SubResource("RectangleShape2D_rqhao")
