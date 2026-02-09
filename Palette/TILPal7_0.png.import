@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cybctvpj3palm"
-path="res://.godot/imported/EditTiles.png-f0a54cd2171d9aa960985b4325d072ea.ctex"
+uid="uid://ccepbeqi5vxjm"
+path="res://.godot/imported/TILPal7_0.png-1c5f2e2ba4dc128ad6c1d763c6940b42.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Palette/EditTiles.png"
-dest_files=["res://.godot/imported/EditTiles.png-f0a54cd2171d9aa960985b4325d072ea.ctex"]
+source_file="res://Palette/TILPal7_0.png"
+dest_files=["res://.godot/imported/TILPal7_0.png-1c5f2e2ba4dc128ad6c1d763c6940b42.ctex"]
 
 [params]
 

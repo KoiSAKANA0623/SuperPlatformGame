@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://b2gy4ek66x3mo"]
+
+[ext_resource type="Script" uid="uid://bm3qjsav4skxm" path="res://Main/Objects/PowerUp/coin_jump.gd" id="1_djraa"]
+[ext_resource type="Script" uid="uid://k1msigdp3tqf" path="res://Main/Objects/PowerUp/coin_anim.gd" id="1_g7wna"]
+[ext_resource type="Script" uid="uid://dniywsmlar4su" path="res://Main/Sprites/sprite_object.gd" id="1_g77fm"]
+[ext_resource type="Shader" uid="uid://b6f6nyhhee76m" path="res://Main/PaletteShad.gdshader" id="2_r2isj"]
+[ext_resource type="Texture2D" uid="uid://b735c5t78osut" path="res://Palette/SPRPal4.png" id="3_djraa"]
+[ext_resource type="Texture2D" uid="uid://cpwahjdy8li86" path="res://Palette/MainPal.png" id="4_djraa"]
+[ext_resource type="Texture2D" uid="uid://cugaits6cfj6r" path="res://Char/SPR.png" id="5_tkg4l"]
+[ext_resource type="Script" uid="uid://bunknk0g16tvh" path="res://Main/Sprites/sprite_tile.gd" id="6_rwv4q"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g7wna"]
+shader = ExtResource("2_r2isj")
+shader_parameter/oldP = ExtResource("4_djraa")
+shader_parameter/newP = ExtResource("3_djraa")
+shader_parameter/precision = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_djraa"]
+shader = ExtResource("2_r2isj")
+shader_parameter/oldP = ExtResource("4_djraa")
+shader_parameter/newP = ExtResource("3_djraa")
+shader_parameter/precision = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tkg4l"]
+shader = ExtResource("2_r2isj")
+shader_parameter/oldP = ExtResource("4_djraa")
+shader_parameter/newP = ExtResource("3_djraa")
+shader_parameter/precision = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rwv4q"]
+shader = ExtResource("2_r2isj")
+shader_parameter/oldP = ExtResource("4_djraa")
+shader_parameter/newP = ExtResource("3_djraa")
+shader_parameter/precision = 0.1
+
+[node name="CoinJump" type="Node2D" unique_id=1491509598]
+script = ExtResource("1_djraa")
+
+[node name="CoinAnim" type="Node" parent="." unique_id=2035028292 node_paths=PackedStringArray("spr_object")]
+script = ExtResource("1_g7wna")
+spr_object = NodePath("../CoinObject")
+
+[node name="CoinObject" type="Node2D" parent="." unique_id=1723709551 node_paths=PackedStringArray("animation")]
+script = ExtResource("1_g77fm")
+animation = NodePath("../CoinAnim")
+metadata/_custom_type_script = "uid://dniywsmlar4su"
+
+[node name="SpriteTile" type="Sprite2D" parent="CoinObject" unique_id=1362031798]
+texture_filter = 1
+material = SubResource("ShaderMaterial_g7wna")
+texture = ExtResource("5_tkg4l")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 48, 8, 8)
+script = ExtResource("6_rwv4q")
+palInt = 2
+metadata/_custom_type_script = "uid://bunknk0g16tvh"
+
+[node name="SpriteTile2" type="Sprite2D" parent="CoinObject" unique_id=995559321]
+texture_filter = 1
+material = SubResource("ShaderMaterial_djraa")
+position = Vector2(8, 0)
+texture = ExtResource("5_tkg4l")
+centered = false
+region_enabled = true
+region_rect = Rect2(96, 120, 8, 8)
+script = ExtResource("6_rwv4q")
+palInt = 2
+metadata/_custom_type_script = "uid://bunknk0g16tvh"
+
+[node name="SpriteTile3" type="Sprite2D" parent="CoinObject" unique_id=113994317]
+texture_filter = 1
+material = SubResource("ShaderMaterial_tkg4l")
+position = Vector2(0, 8)
+texture = ExtResource("5_tkg4l")
+centered = false
+flip_v = true
+region_enabled = true
+region_rect = Rect2(0, 48, 8, 8)
+script = ExtResource("6_rwv4q")
+palInt = 2
+metadata/_custom_type_script = "uid://bunknk0g16tvh"
+
+[node name="SpriteTile4" type="Sprite2D" parent="CoinObject" unique_id=1340553791]
+texture_filter = 1
+material = SubResource("ShaderMaterial_rwv4q")
+position = Vector2(8, 8)
+texture = ExtResource("5_tkg4l")
+centered = false
+region_enabled = true
+region_rect = Rect2(96, 120, 8, 8)
+script = ExtResource("6_rwv4q")
+palInt = 2
+metadata/_custom_type_script = "uid://bunknk0g16tvh"

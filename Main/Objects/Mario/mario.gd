@@ -16,6 +16,9 @@ class_name Mario_Player
 @onready var TopBlock_Check = $MarioCollision/TopCheck
 @onready var BottomBlock_Check = $MarioCollision/BottomCheck
 
+@onready var BoundBox_Big = $MarioCollision/BoundBox_Big
+@onready var BoundBox_Small = $MarioCollision/BoundBox_Small
+
 var inp_axis: float = 0.0
 
 var direction: int = 0
@@ -39,6 +42,9 @@ var underwater: bool = false
 var enabled: bool = true
 var control_lock: bool = false
 var cutscene_type: int = 0
+
+var mario_timer: int = 0
+var mario_flash: int = 0
 
 var col_count: int = 0
 var swim_counter: int = 0
@@ -83,7 +89,39 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if !enabled:
+		if is_bigMario != 0 || is_bigMario != 9:
+			mario_timer -= 1
+		Anim_Node.anim_speed = 0
+		if is_bigMario == 3:
+			is_grounded = true
+			if mario_timer <= -7:
+				camera()
+				Visual_Node.anim = 21
+				if mario_timer <= -59:
+					enabled = true
+					is_bigMario = 9
+					mario_timer = 0
+					if !is_grounded:
+						Visual_Node.anim = 2 + is_bigMario
+		elif is_bigMario == 6:
+			mario_flash = 8
+			if mario_timer <= -15:
+				camera()
+				Visual_Node.anim = 22
+				if mario_timer <= -55:
+					enabled = true
+					is_bigMario = 0
+					mario_timer = 0
+					if !is_grounded:
+						Visual_Node.anim = 2 + is_bigMario
+			else:
+				Visual_Node.anim = 13
+		flash_mario()
 		return
+	mario_timer = 0
+	if Global.interval_timer == 0 && mario_flash:
+		mario_flash -= 1
+	flash_mario()
 
 	if !control_lock:
 		inp_axis = Input.get_axis("Left","Right")
@@ -111,7 +149,61 @@ func _physics_process(_delta: float) -> void:
 			inp_axis = 1.0
 			direction = inp_axis
 
+#	if Input.is_action_just_pressed("Select"):
+#		if is_bigMario == 0:
+#			is_bigMario = 3
+#		else:
+#			is_bigMario = 6
+#		enabled = false
+
 	# Set Anims
+	if is_bigMario == 0 || is_bigMario == 9:
+		anim_mario()
+
+	if !underwater:
+		ground_phys()
+	else:
+		water_phys()
+
+	Global.mario_pos = global_position
+
+	if col_count > 0:
+		col_count -= 1
+
+	if is_bigMario:
+		Global.mario_big = true
+	else:
+		Global.mario_big = false
+
+	camera()
+	Global.camera_pos = int(Camera_Node.global_position.x)
+	Global.refresh_line = int(Camera_Node.global_position.x/16)+24
+
+	if global_position.x < Camera_Node.global_position.x:
+		global_position.x = Camera_Node.global_position.x
+		if inp_axis == -1:
+			x_velocity = 0.0
+	elif global_position.x > Camera_Node.global_position.x + 240:
+		global_position.x = Camera_Node.global_position.x + 240
+		if inp_axis == 1:
+			x_velocity = 0.0
+
+	# TEST
+	if global_position.y > 256:
+		global_position.y = -256
+## END of _physics_process
+
+
+func flash_mario() -> void:
+	if Global.interval_timer % 2 == 0:
+		if mario_flash:
+			Visual_Node.visible = false
+	else:
+		Visual_Node.visible = true
+## END of flash_mario
+
+
+func anim_mario() -> void:
 	if is_grounded:
 		if x_velocity:
 			if skidding && abs(x_velocity) > 0.625 && !is_duck:
@@ -144,44 +236,11 @@ func _physics_process(_delta: float) -> void:
 				swim_counter -= 1
 			else:
 				if (Visual_Node.anim == 8 + is_bigMario):
-					if Anim_Node.fake_frame == 5:
+					if Anim_Node.fake_frame == 8:
 						Visual_Node.anim = 7 + is_bigMario
 				else:
 					Visual_Node.anim = 7 + is_bigMario
-
-	if !underwater:
-		ground_phys()
-	else:
-		water_phys()
-
-	Global.mario_pos = global_position
-
-	if col_count > 0:
-		col_count -= 1
-
-	if is_bigMario:
-		Global.mario_big = true
-	else:
-		Global.mario_big = false
-
-	camera()
-	Global.camera_pos = int(Camera_Node.global_position.x)
-	Global.refresh_line = int(Camera_Node.global_position.x/16)+24
-	$LvlLoad.global_position.x = Global.refresh_line*16
-
-	if global_position.x < Camera_Node.global_position.x:
-		global_position.x = Camera_Node.global_position.x
-		if inp_axis == -1:
-			x_velocity = 0.0
-	elif global_position.x > Camera_Node.global_position.x + 240:
-		global_position.x = Camera_Node.global_position.x + 240
-		if inp_axis == 1:
-			x_velocity = 0.0
-
-	# TEST
-	if global_position.y > 256:
-		global_position.y = -256
-## END of _physics_process
+## END of anim_mario
 
 
 func ground_phys() -> void:
@@ -386,13 +445,13 @@ func do_collisions() -> void:
 	if y_velocity < 0.0:
 		if HeadCol.is_colliding() && TopBlock_Check.get_overlapping_bodies():
 			if TopBlock_Check.has_overlapping_areas():
-				if TopBlock_Check.get_overlapping_areas()[0].is_in_group("ItemHit") && !block_bounce:
+				if TopBlock_Check.get_overlapping_areas()[0].is_in_group("ItemHit") && !block_bounce && !underwater:
 					TopBlock_Check.get_overlapping_areas()[0].get_parent().check_hit()
 					block_bounce = 15
 			y_velocity = 1.0
 # Floor Collision
 	BottomBlock_Check.global_position.x = ceil(global_position.x) + 8
-	BottomBlock_Check.global_position.y = round((global_position.y+4)/16)*16 + 40
+	BottomBlock_Check.global_position.y = round((global_position.y+3)/16)*16 + 40
 	vel_clamp = clamp(y_velocity,0.0,5.0)
 	var a = round(global_position.y/16)*16
 	var b = (round(LeftFootCol.get_collision_point().y) - 32)
@@ -449,6 +508,17 @@ func do_collisions() -> void:
 			x_velocity = 0.0
 			col_count = 16
 		return
+
+	var boundingbox = BoundBox_Big
+	if is_bigMario == 0 or (is_duck && !inp_axis):
+		boundingbox = BoundBox_Small
+
+	for i in boundingbox.get_overlapping_areas():
+		if i.is_in_group("PowerUp"):
+			i.get_parent().get_parent().queue_free()
+			if is_bigMario == 0:
+				is_bigMario = 3
+				enabled = false
 ## END of do_collisions
 
 
@@ -458,6 +528,10 @@ func set_collision() -> void:
 		HeadCol.position = Vector2(8,22)
 		LeftSiHiCol.position = Vector2(4,24)
 		RightSiHiCol.position = Vector2(12,24)
+		BoundBox_Big.visible = false
+		BoundBox_Big.get_child(0).disabled = true
+		BoundBox_Small.visible = true
+		BoundBox_Small.get_child(0).disabled = false
 	else:
 		if underwater:
 			HeadCol.position = Vector2(8,2)
@@ -466,11 +540,16 @@ func set_collision() -> void:
 		is_big_Adder = 0
 		LeftSiHiCol.position = Vector2(4,8)
 		RightSiHiCol.position = Vector2(12,8)
+		BoundBox_Big.visible = true
+		BoundBox_Big.get_child(0).disabled = false
+		BoundBox_Small.visible = false
+		BoundBox_Small.get_child(0).disabled = true
 
 	LeftFootCol.position = Vector2(3,32)
 	RightFootCol.position = Vector2(13,32)
 	LeftSiLoCol.position = Vector2(4,25)
 	RightSiLoCol.position = Vector2(12,25)
+
 ## END of set_collision
 
 

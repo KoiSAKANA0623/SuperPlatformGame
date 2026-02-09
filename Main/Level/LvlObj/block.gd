@@ -6,7 +6,9 @@ const item_col = preload("res://Main/Level/LvlObj/item_block_collision.tscn")
 
 var summonables: Dictionary = {
 	"Brick_Shard": load("res://Main/Objects/Brick_Break/brick_break.tscn"),
-	"Bump_Block": load("res://Main/Objects/Bump_Block/bump_block.tscn")
+	"Bump_Block": load("res://Main/Objects/Bump_Block/bump_block.tscn"),
+	"PowerUp": load("res://Main/Objects/PowerUp/power_up.tscn"),
+	"CoinJump": load("res://Main/Objects/PowerUp/coin_jump.tscn")
 }
 
 @onready var Visual_Node = $Visual
@@ -15,7 +17,10 @@ var palInt: int = 0
 var palette: Texture = Global.TILPal0
 
 var sp_col
-var col_type:int = 0
+var col_type: int = 0
+
+var item: int = -1
+var block_type
 
 const block_coltype: Dictionary = {
 	"GROUND": [true,1],
@@ -38,8 +43,8 @@ const block_coltype: Dictionary = {
 
 	"HARDBLOCK": [true,0],
 	"BRICK_HI": [true,1], "BRICK": [true,1],
-	"Q_BLOCK": [true,1],
-	"EMPTY_BLOCK": [true,1],
+	"QUESTION_BLOCK": [true,1],
+	"EMPTY_BLOCK": [true,0],
 	"COIN": [true,2],
 	"PIPE_00":[true,4], "PIPE_01":[true,4], "PIPE_10":[true,0], "PIPE_11":[true,0],
 	"PIPE_04":[true,0], "PIPE_05":[true,0], "PIPE_06":[true,0], "PIPE_07":[true,0], "PIPE_08":[true,0], "PIPE_09":[true,0],
@@ -70,13 +75,14 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if global_position.x < Global.camera_pos - 24:
+	if global_position.x < Global.camera_pos - 95:
 		queue_free()
 ## END of _process
 
 
 func build_block(block_tile, t) -> void:
-	var b = block_coltype.get(t)
+	var b = (block_coltype.get(t))
+	block_type = t
 	if b[0]:
 		set_collision(b[1])
 		col_type = b[1]
@@ -134,30 +140,36 @@ func set_collision(interactable) -> void:
 func check_hit() -> void:
 	match col_type:
 		1:
-			if !Global.mario_big:
-				bump_block()
-				return
-			var shard0 = summonables["Brick_Shard"].instantiate()
-			shard0.global_position = global_position
-			shard0.x_velocity = -1.0
-			shard0.y_velocity = -6.0
-			Global.main_sprit_n.add_child(shard0)
-			var shard1 = summonables["Brick_Shard"].instantiate()
-			shard1.global_position = global_position + Vector2(8,0)
-			shard1.x_velocity = 1.0
-			shard1.y_velocity = -6.0
-			Global.main_sprit_n.add_child(shard1)
-			var shard2 = summonables["Brick_Shard"].instantiate()
-			shard2.global_position = global_position + Vector2(0,8)
-			shard2.x_velocity = -1.0
-			shard2.y_velocity = -4.0
-			Global.main_sprit_n.add_child(shard2)
-			var shard3 = summonables["Brick_Shard"].instantiate()
-			shard3.global_position = global_position + Vector2(8,8)
-			shard3.x_velocity = 1.0
-			shard3.y_velocity = -4.0
-			Global.main_sprit_n.add_child(shard3)
-			queue_free()
+			match block_type:
+				"BRICK", "BRICK_HI", "GROUND":
+					if !Global.mario_big || item != -1:
+						bump_block()
+						return
+					var shard0 = summonables["Brick_Shard"].instantiate()
+					shard0.global_position = global_position
+					shard0.x_velocity = -1.0
+					shard0.y_velocity = -6.0
+					Global.main_sprit_n.add_child(shard0)
+					var shard1 = summonables["Brick_Shard"].instantiate()
+					shard1.global_position = global_position + Vector2(8,0)
+					shard1.x_velocity = 1.0
+					shard1.y_velocity = -6.0
+					Global.main_sprit_n.add_child(shard1)
+					var shard2 = summonables["Brick_Shard"].instantiate()
+					shard2.global_position = global_position + Vector2(0,8)
+					shard2.x_velocity = -1.0
+					shard2.y_velocity = -4.0
+					Global.main_sprit_n.add_child(shard2)
+					var shard3 = summonables["Brick_Shard"].instantiate()
+					shard3.global_position = global_position + Vector2(8,8)
+					shard3.x_velocity = 1.0
+					shard3.y_velocity = -4.0
+					Global.main_sprit_n.add_child(shard3)
+					queue_free()
+					return
+				_:
+					bump_block()
+					return
 ## END of check_hit
 
 
@@ -165,15 +177,64 @@ func bump_block() -> void:
 	var bump = summonables["Bump_Block"].instantiate()
 	bump.global_position = global_position + Vector2(0,-1)
 	bump.block_pos = int(global_position.y/16)
-	bump.visible = false
 	bump.y_velocity = -2.0
+	bump.visible = false
+	bump.palette_id = 3
+	match block_type:
+		"BRICK", "BRICK_HI", "GROUND":
+			if Global.main_.level_type >= 2:
+				bump.get_node("SpriteObject").anim = 1
+			else:
+				bump.get_node("SpriteObject").anim = 0
+			if item == 0:
+				bump.get_node("SpriteObject").anim = 2
+				if Global.main_.level_type >= 2:
+					bump.palette_id = 1
+			elif item == 3:
+				var coin = summonables["CoinJump"].instantiate()
+				coin.global_position = global_position + Vector2(5,-20)
+				coin.y_velocity = -5
+				Global.main_sprit_n.add_child(coin)
+		"QUESTION_BLOCK":
+			bump.get_node("SpriteObject").anim = 2
+			if Global.main_.level_type >= 2:
+				bump.palette_id = 1
+			if item == 1:
+				var coin = summonables["CoinJump"].instantiate()
+				coin.global_position = global_position + Vector2(5,-20)
+				coin.y_velocity = -5
+				Global.main_sprit_n.add_child(coin)
+		_:
+			bump.get_node("SpriteObject").anim = 2
 	Global.main_sprit_n.add_child(bump)
-	bump.get_node("SpriteObject").anim = 1
-	await get_tree().physics_frame
 	await get_tree().process_frame
+	await get_tree().physics_frame
+	bump.visible = true
 	visible = false
-	if bump:
-		bump.visible = true
-	await get_tree().create_timer(0.2166).timeout
-	visible = true
+	await get_tree().create_timer(0.23).timeout
+	match block_type:
+		"QUESTION_BLOCK":
+			self.queue_free()
+			Global.main_.inst_lvl_gen.place_newblock(global_position.x,global_position.y, "EMPTY_BLOCK")
+			if item == 0:
+				spawn_powerup()
+		"BRICK", "BRICK_HI":
+			if item == 0:
+				self.queue_free()
+				Global.main_.inst_lvl_gen.place_newblock(global_position.x,global_position.y, "EMPTY_BLOCK")
+				spawn_powerup()
+			else:
+				visible = true
+		_:
+			visible = true
 ## END of bump_block
+
+
+func spawn_powerup() -> void:
+	if Global.powerup_l != null:
+		Global.powerup_l.queue_free()
+	var powerup = summonables["PowerUp"].instantiate()
+	powerup.global_position = global_position + Vector2(0,-4)
+	Global.main_spritbh_n.add_child(powerup)
+	Global.powerup_l = powerup
+## END of spawn_powerup

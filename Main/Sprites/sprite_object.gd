@@ -38,6 +38,12 @@ func _physics_process(delta: float) -> void:
 ## END of _process
 
 
+func pal_change(palette_id) -> void:
+	for i in get_children():
+		i.pal_line_change(palette_id)
+## END of pal_change
+
+
 func set_sprite() -> void:
 	var spr_frame = animation.frames
 	var frame_add = animation.true_frame * get_child_count()

@@ -8,13 +8,18 @@ var block_pos: int = 0
 
 var y_velocity: float = 0.0
 
+var palette_id: int = 0
+
+
+func _ready() -> void:
+	Visual_Node.pal_change(palette_id)
+## END of _ready
 
 func _physics_process(_delta: float) -> void:
-	if visible:
-		y_velocity += 0.3125
-		global_position.y += y_velocity
+	y_velocity += 0.3125
+	global_position.y += y_velocity
 
-	if int(global_position.y/16) >= block_pos:
+	if global_position.y >= (block_pos*16)+2:
 		queue_free()
 	elif global_position.x < Global.camera_pos - 8:
 		queue_free()

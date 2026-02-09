@@ -63,6 +63,12 @@ size = Vector2(4, 4)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jl3j7"]
 size = Vector2(12, 4)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xj44l"]
+size = Vector2(12, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_36wje"]
+size = Vector2(10, 12)
+
 [node name="Mario" type="Node2D" unique_id=753764594]
 script = ExtResource("1_8lt1j")
 
@@ -217,21 +223,22 @@ position = Vector2(8, 40)
 [node name="BottomCol" type="CollisionShape2D" parent="MarioCollision/BottomCheck" unique_id=315937392]
 shape = SubResource("RectangleShape2D_jl3j7")
 
+[node name="BoundBox_Big" type="Area2D" parent="MarioCollision" unique_id=780973041 groups=["Mario"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MarioCollision/BoundBox_Big" unique_id=1183880721]
+position = Vector2(8, 20)
+shape = SubResource("RectangleShape2D_xj44l")
+debug_color = Color(0.30510303, 0.62781984, 0, 0.41960785)
+
+[node name="BoundBox_Small" type="Area2D" parent="MarioCollision" unique_id=912334865 groups=["Mario"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MarioCollision/BoundBox_Small" unique_id=1183321173]
+position = Vector2(8, 26)
+shape = SubResource("RectangleShape2D_36wje")
+debug_color = Color(0.30588236, 0.627451, 0, 0.41960785)
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=795794541]
 top_level = true
 position = Vector2(0, 8)
 anchor_mode = 0
 process_callback = 0
-
-[node name="Origin" type="ColorRect" parent="." unique_id=938249971]
-visible = false
-offset_right = 1.0
-offset_bottom = 1.0
-metadata/_edit_lock_ = true
-
-[node name="LvlLoad" type="ColorRect" parent="." unique_id=1597010953]
-top_level = true
-offset_left = -136.0
-offset_right = -120.0
-offset_bottom = 244.0
-color = Color(1, 0, 0, 0.5019608)

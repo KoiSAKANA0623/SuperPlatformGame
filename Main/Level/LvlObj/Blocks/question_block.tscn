@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dbwk08ldirff0"]
+
+[ext_resource type="Script" uid="uid://bevfaob6cufgf" path="res://Main/Level/LvlObj/Blocks/question_block.gd" id="1_e35uj"]
+
+[node name="QuestionBlock" type="Node2D" unique_id=91811596]
+script = ExtResource("1_e35uj")
+lvl_object_type = "QUESTION_BLOCK"

@@ -1,8 +1,6 @@
 @tool
 extends SpriteAnim
 
-@export var spr_object: SpriteObject
-
 # 0 = SM Idle
 # 1 = SM Walk 0
 # 2 = SM Walk 1
@@ -443,7 +441,7 @@ func set_animations() -> void:
 	animations.append_array(animframes)
 	animframes.clear()
 	# SM Swim Float
-	animframes.push_back([10,11,9,10,11,9])
+	animframes.push_back([10,11,9,10,11,9,10,11,9])
 	animations.append_array(animframes)
 	animframes.clear()
 	# SM Swim Paddle
@@ -499,7 +497,7 @@ func set_animations() -> void:
 	animations.append_array(animframes)
 	animframes.clear()
 	# Shrinking
-	animframes.push_back([19,19,19,19,23,9,23,9,23,9,23,9,23,9])
+	animframes.push_back([23,9,23,9,23,9,23,9,23,9])
 	animations.append_array(animframes)
 	animframes.clear()
 ## END of animate
@@ -557,7 +555,7 @@ func animate(anim) -> void:
 			if frame_timer >= 4:
 				frame_timer = 0
 				fake_frame += 1
-				if fake_frame >= 6:
+				if fake_frame >= 9:
 					fake_frame = 0
 			true_frame = animations[anim][fake_frame]
 			if true_frame != 11:
@@ -642,8 +640,8 @@ func animate(anim) -> void:
 			if frame_timer >= 4:
 				frame_timer = 0
 				fake_frame += 1
-				if fake_frame >= 14:
-					fake_frame = 13
+				if fake_frame >= 10:
+					fake_frame = 9
 			true_frame = animations[anim][fake_frame]
 		_:
 			true_frame = animations[0][0]

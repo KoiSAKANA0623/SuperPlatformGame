@@ -14,7 +14,7 @@ func _ready() -> void:
 	centered = false
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	material = Global.Pal_Shader.duplicate()
-	pal_line_change()
+	pal_line_change(palInt)
 ## END of _ready
 
 
@@ -34,8 +34,8 @@ func tile_change(x, y, flX, flY) -> void:
 ## END of tile_change
 
 
-func pal_line_change() -> void:
-	match palInt:
+func pal_line_change(palette_id) -> void:
+	match palette_id:
 		0:
 			palette = Global.SPRPal0
 		1:

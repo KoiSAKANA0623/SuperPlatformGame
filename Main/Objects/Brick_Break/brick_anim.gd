@@ -1,8 +1,6 @@
 @tool
 extends SpriteAnim
 
-@export var spr_object: SpriteObject
-
 
 func set_frames() -> void:
 	var tileframes: Array

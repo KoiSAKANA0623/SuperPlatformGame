@@ -4,25 +4,25 @@ extends SpriteAnim
 
 func set_frames() -> void:
 	var tileframes: Array
-	# Brick Highlighted
-	tileframes.push_back([5,8,false,false,true])
-	tileframes.push_back([5,8,false,false,true])
-	tileframes.push_back([6,8,false,false,true])
-	tileframes.push_back([6,8,false,false,true])
+	# Super Mushroom
+	tileframes.push_back([6,7,false,false,true])
+	tileframes.push_back([7,7,false,false,true])
+	tileframes.push_back([8,7,false,false,true])
+	tileframes.push_back([9,7,false,false,true])
 	frames.append_array(tileframes)
 	tileframes.clear()
-	# Brick
-	tileframes.push_back([6,8,false,false,true])
-	tileframes.push_back([6,8,false,false,true])
-	tileframes.push_back([6,8,false,false,true])
-	tileframes.push_back([6,8,false,false,true])
+	# Fire Flower
+	tileframes.push_back([6,13,false,false,true])
+	tileframes.push_back([6,13,true,false,true])
+	tileframes.push_back([9,13,false,false,true])
+	tileframes.push_back([9,13,true,false,true])
 	frames.append_array(tileframes)
 	tileframes.clear()
-	# Empty Block
-	tileframes.push_back([7,8,false,false,true])
-	tileframes.push_back([7,8,true,false,true])
-	tileframes.push_back([7,8,false,true,true])
-	tileframes.push_back([7,8,true,true,true])
+	# Starman
+	tileframes.push_back([13,8,false,false,true])
+	tileframes.push_back([13,8,true,false,true])
+	tileframes.push_back([4,14,false,false,true])
+	tileframes.push_back([4,14,true,false,true])
 	frames.append_array(tileframes)
 	tileframes.clear()
 ## END of set_frames
@@ -30,15 +30,13 @@ func set_frames() -> void:
 
 func set_animations() -> void:
 	var animframes: Array
-	# Brick Highlighted
+	# Test Animation - [frame 0, frame 1, frame 2, etc...]
 	animframes.push_back([0])
 	animations.append_array(animframes)
 	animframes.clear()
-	# Brick
 	animframes.push_back([1])
 	animations.append_array(animframes)
 	animframes.clear()
-	# Empty Block
 	animframes.push_back([2])
 	animations.append_array(animframes)
 	animframes.clear()
@@ -60,10 +58,10 @@ func animate(anim) -> void:
 
 func editor_sprite() -> void:
 	var tileframes: Array
-	tileframes.push_back([7,8,false,false])
-	tileframes.push_back([7,8,true,false])
-	tileframes.push_back([7,8,false,true])
-	tileframes.push_back([7,8,true,true])
+	tileframes.push_back([6,7,false,false])
+	tileframes.push_back([7,7,false,false])
+	tileframes.push_back([8,7,false,false])
+	tileframes.push_back([9,7,false,false])
 	edit_frame.append_array(tileframes)
 	tileframes.clear()
-## END 
+## END of editor_sprite

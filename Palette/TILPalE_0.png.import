@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccepbeqi5vxjm"
-path="res://.godot/imported/TILPal7.png-3d6760db4b03174a86f3be5c6c8ad91c.ctex"
+uid="uid://b8lbr4i4fwuy8"
+path="res://.godot/imported/TILPalE_0.png-4fb6ebeeb556f55c19deb872444214ab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Palette/TILPal7.png"
-dest_files=["res://.godot/imported/TILPal7.png-3d6760db4b03174a86f3be5c6c8ad91c.ctex"]
+source_file="res://Palette/TILPalE_0.png"
+dest_files=["res://.godot/imported/TILPalE_0.png-4fb6ebeeb556f55c19deb872444214ab.ctex"]
 
 [params]
 

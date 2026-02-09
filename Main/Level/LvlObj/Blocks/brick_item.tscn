@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://l13i2ms1lpqw"]
+
+[ext_resource type="Script" uid="uid://bt61kp4glxeny" path="res://Main/Level/LvlObj/Blocks/brick_item.gd" id="1_4amqs"]
+
+[node name="BrickItem" type="Node2D" unique_id=91811596]
+script = ExtResource("1_4amqs")
+lvl_object_type = "BRICK_ITEM"

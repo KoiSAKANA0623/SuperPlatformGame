@@ -2,6 +2,8 @@
 extends Node
 class_name SpriteAnim
 
+@export var spr_object: SpriteObject
+
 var frames: Array = []
 var animations: Array = []
 
@@ -46,6 +48,8 @@ func animate(anim) -> void:
 	match anim:
 		0: # Test Frame
 			true_frame = animations[anim][0]
+	last_anim = anim
+	spr_object.set_sprite()
 ## END of animate
 
 

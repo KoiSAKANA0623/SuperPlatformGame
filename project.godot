@@ -32,6 +32,8 @@ window/stretch/mode="viewport"
 
 ItemHit="The area that detects when Mario hits a ?Block or Bricks"
 Player_Head="Detects if player hits bottom of block"
+Mario=""
+PowerUp=""
 
 [input]
 
@@ -98,3 +100,10 @@ textures/lossless_compression/force_png=true
 environment/volumetric_fog/use_filter=0
 2d/snap/snap_2d_transforms_to_pixel=true
 2d/snap/snap_2d_vertices_to_pixel=true
+
+[shader_globals]
+
+CoinPalRotation={
+"type": "vec3",
+"value": Vector3(0.918, 0.62, 0.133)
+}

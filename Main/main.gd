@@ -4,6 +4,7 @@ extends Node2D
 @onready var bg = $BG/BGColor
 @onready var level_node = $Level
 @onready var sprite_node = $Sprites
+@onready var spriteBH_node = $SpriteBehind
 @onready var lvl_gen = preload("res://Main/Level/LvlObj/LevelGen/level_generator.tscn")
 var edit_tiles: TileMapLayer
 var inst_lvl_gen
@@ -22,10 +23,14 @@ var init_floor_bit: int = 0
 var hole_r: int = 0
 var bit_mask: int = 1 << 15
 
+var coin_timer: int = 0
+
 
 func _ready() -> void:
+	Global.main_ = self
 	Global.main_level_n = level_node
 	Global.main_sprit_n = sprite_node
+	Global.main_spritbh_n = spriteBH_node
 	edit_tiles = $EditorTiles
 	load_level()
 	if Engine.is_editor_hint():
@@ -38,11 +43,18 @@ func _ready() -> void:
 ## END of _ready
 
 
-func _process(_delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		editor_tilemap()
 		return
 	inst_lvl_gen.generate(level_type)
+
+	if Global.interval_timer > 0:
+		Global.interval_timer -= 1
+	else:
+		Global.interval_timer = 20
+
+	coin_palette()
 
 	var now = Time.get_ticks_msec()
 	while Global.frame_times.size() > 0 && Global.frame_times[0] <= now - 1000:
@@ -51,6 +63,20 @@ func _process(_delta: float) -> void:
 	Global.FPS = Global.frame_times.size()
 	$BG/Label.text = "fps: %d" % Global.FPS
 ## END of _process
+
+
+func coin_palette() -> void:
+	coin_timer += 1
+	if coin_timer >= 48:
+		coin_timer = 0
+	match coin_timer:
+		0, 8, 16:
+			RenderingServer.global_shader_parameter_set("CoinPalRotation",Color(0.918, 0.62, 0.133))
+		24, 40:
+			RenderingServer.global_shader_parameter_set("CoinPalRotation",Color(0.6, 0.306, 0.0))
+		32:
+			RenderingServer.global_shader_parameter_set("CoinPalRotation",Color(0.337, 0.114, 0.0))
+## END of coin_palette
 
 
 func load_level() -> void:
@@ -67,7 +93,7 @@ func load_level() -> void:
 			Global.TILPal0 = load("res://Palette/TILPalB.png")
 			Global.TILPal1 = load("res://Palette/TILPalC.png")
 			Global.TILPal2 = load("res://Palette/TILPalD.png")
-			Global.TILPal3 = load("res://Palette/TILPalE.png")
+			Global.TILPal3 = load("res://Palette/TILPalE_0.png")
 		1:
 			bg_palette = "9290FF"
 			Global.SPRPal1 = load("res://Palette/SPRPal3.png")
@@ -77,7 +103,7 @@ func load_level() -> void:
 			Global.TILPal0 = load("res://Palette/TILPal0.png")
 			Global.TILPal1 = load("res://Palette/TILPal1.png")
 			Global.TILPal2 = load("res://Palette/TILPal2.png")
-			Global.TILPal3 = load("res://Palette/TILPal3.png")
+			Global.TILPal3 = load("res://Palette/TILPal3_0.png")
 		2:
 			bg_palette = "000000"
 			Global.SPRPal1 = load("res://Palette/SPRPal6.png")
@@ -87,7 +113,7 @@ func load_level() -> void:
 			Global.TILPal0 = load("res://Palette/TILPal4.png")
 			Global.TILPal1 = load("res://Palette/TILPal5.png")
 			Global.TILPal2 = load("res://Palette/TILPal6.png")
-			Global.TILPal3 = load("res://Palette/TILPal7.png")
+			Global.TILPal3 = load("res://Palette/TILPal7_0.png")
 		3:
 			bg_palette = "000000"
 			Global.SPRPal1 = load("res://Palette/SPRPal6.png")
@@ -97,7 +123,7 @@ func load_level() -> void:
 			Global.TILPal0 = load("res://Palette/TILPal8.png")
 			Global.TILPal1 = load("res://Palette/TILPal8.png")
 			Global.TILPal2 = load("res://Palette/TILPal9.png")
-			Global.TILPal3 = load("res://Palette/TILPalA.png")
+			Global.TILPal3 = load("res://Palette/TILPalA_0.png")
 	bg.color = bg_palette
 	bg.size = Vector2(256.0,240.0)
 

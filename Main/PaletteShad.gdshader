@@ -3,6 +3,8 @@ shader_type canvas_item;
 uniform sampler2D oldP: filter_nearest;
 uniform sampler2D newP: filter_nearest;
 
+global uniform vec3 CoinPalRotation;
+
 const int numC = 4;
 const vec4 alphaCol = vec4(1.0,0.0,1.0,1.0);
 const vec4 coinCol = vec4(0.0,1.0,1.0,1.0);
@@ -25,6 +27,9 @@ void fragment() {
 	vec4 new_color = swap_color(color);
 	if (new_color==alphaCol) {
 		new_color.a = 0.0;
+	}
+	if (new_color==coinCol) {
+		new_color.rgb = CoinPalRotation;
 	}
 	COLOR = new_color;
 }
