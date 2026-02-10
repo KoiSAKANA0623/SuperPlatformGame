@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dck1het4ds2uw"]
+
+[ext_resource type="Script" uid="uid://c2kuoogoxe3qf" path="res://Main/Level/LvlObj/Blocks/coins.gd" id="1_3nwx0"]
+
+[node name="Coins" type="Node2D" unique_id=891318840]
+script = ExtResource("1_3nwx0")
+lvl_object_type = "COIN"

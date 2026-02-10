@@ -44,8 +44,8 @@ func floor_pattern(level_type) -> void:
 	var item: Array
 	item.resize(5)
 	item.fill(-1)
-	## PASS 1
 	for x in Global.refresh_line - refresh_check:
+	## PASS 1
 		for i in get_parent().get_children():
 			if int(i.global_position.x/16) > refresh_check:
 				continue
@@ -100,6 +100,39 @@ func floor_pattern(level_type) -> void:
 				level_dict[inst_block] = inst_block.position
 				level_impor[inst_block] = 0
 	## PASS 2
+		for y in 13:
+			if y > 7 && hole_flag == true:
+				continue
+			match Global.bg_bit:
+				1:
+					if y >= 0:
+						block2place = blockT.tile_map["WATER_SURFACE"]
+						if y >= 1:
+							block2place = blockT.tile_map["WATER"]
+						if check_delete_at(refresh_check*16,32.0 + (y*16), -1):
+							continue
+						inst_block = Global.Block.instantiate()
+						add_child(inst_block)
+						inst_block.position.y = 32.0 + (y*16)
+						inst_block.position.x = (refresh_check) * 16
+						setup_block(inst_block, block2place, blockT)
+						level_dict[inst_block] = inst_block.position
+						level_impor[inst_block] = -1
+				3:
+					if y >= 11:
+						block2place = blockT.tile_map["WATER_SURFACE"]
+						if y >= 12:
+							block2place = blockT.tile_map["WATER"]
+						if check_delete_at(refresh_check*16,32.0 + (y*16), -1):
+							continue
+						inst_block = Global.Block.instantiate()
+						add_child(inst_block)
+						inst_block.position.y = 32.0 + (y*16)
+						inst_block.position.x = (refresh_check) * 16
+						setup_block(inst_block, block2place, blockT)
+						level_dict[inst_block] = inst_block.position
+						level_impor[inst_block] = -1
+	## PASS 3
 		var num_of_y_obj: int = 0
 		for i in get_parent().get_children():
 			if int(i.global_position.x/16) > refresh_check:
@@ -176,6 +209,17 @@ func floor_pattern(level_type) -> void:
 					if row[num_of_y_obj-1] + int(i.global_position.x/16) <= refresh_check:
 						row[num_of_y_obj-1] = 0
 						i.queue_free()
+				elif i.lvl_object_type == "COIN":
+					num_of_y_obj += 1
+					impor[num_of_y_obj-1] = 2
+					item[num_of_y_obj-1] = 1
+					y_pos.set(num_of_y_obj-1,i.global_position.y)
+					row.set(num_of_y_obj-1,i.length)
+					column.set(num_of_y_obj-1,1)
+					block_tile[num_of_y_obj-1] = blockT.tile_map[i.lvl_object_type]
+					if row[num_of_y_obj-1] + int(i.global_position.x/16) <= refresh_check:
+						row[num_of_y_obj-1] = 0
+						i.queue_free()
 		for n in num_of_y_obj:
 			for y in 13:
 				if column[num_of_y_obj-1] && row[num_of_y_obj-1]:
@@ -201,6 +245,8 @@ func floor_pattern(level_type) -> void:
 							block2place = blockT.tile_map["CORAL"]
 						elif block2place == blockT.tile_map["HARDBLOCK"]:
 							block2place = blockT.tile_map["UNDERWATER"]
+						elif block2place == blockT.tile_map["COIN"]:
+							block2place = blockT.tile_map["COIN_UW"]
 					elif level_type == 3:
 						if block2place == blockT.tile_map["HARDBLOCK"]:
 							block2place = blockT.tile_map["CASTLE"]
@@ -245,7 +291,6 @@ func check_delete_at(x,y, importance) -> bool:
 		var block_imp = level_impor.get(block_)
 		if block_imp > importance:
 			return true
-		print(block_imp)
 		block_.queue_free()
 		level_dict.erase(block_)
 	return false

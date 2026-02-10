@@ -3,6 +3,7 @@ class_name Blocks
 
 const block_col = preload("res://Main/Level/LvlObj/block_collision.tscn")
 const item_col = preload("res://Main/Level/LvlObj/item_block_collision.tscn")
+const coin_col = preload("res://Main/Level/LvlObj/coin_col.tscn")
 
 var summonables: Dictionary = {
 	"Brick_Shard": load("res://Main/Objects/Brick_Break/brick_break.tscn"),
@@ -21,6 +22,8 @@ var col_type: int = 0
 
 var item: int = -1
 var block_type
+
+var multi_coin: int = -1
 
 const block_coltype: Dictionary = {
 	"GROUND": [true,1],
@@ -74,7 +77,10 @@ func _ready() -> void:
 ## END of _ready
 
 
-func _process(_delta: float) -> void:
+func _physics_process(_delta: float) -> void:
+	if multi_coin > 0 && Global.interval_timer == 0:
+		multi_coin -= 1
+
 	if global_position.x < Global.camera_pos - 95:
 		queue_free()
 ## END of _process
@@ -118,13 +124,17 @@ func set_collision(interactable) -> void:
 		0:
 			var inst_col = block_col.instantiate()
 			add_child(inst_col)
+			return
 		1: # Brick/Q-Block interaction
 			var inst_col = block_col.instantiate()
 			add_child(inst_col)
 			var inst_item_col = item_col.instantiate()
 			add_child(inst_item_col)
 			sp_col = inst_item_col
+			return
 		2: # Coin
+			var inst_col = coin_col.instantiate()
+			add_child(inst_col)
 			return
 		3: # Flagpole
 			return
@@ -142,6 +152,7 @@ func check_hit() -> void:
 		1:
 			match block_type:
 				"BRICK", "BRICK_HI", "GROUND":
+					check_above(global_position.x,global_position.y)
 					if !Global.mario_big || item != -1:
 						bump_block()
 						return
@@ -174,6 +185,8 @@ func check_hit() -> void:
 
 
 func bump_block() -> void:
+	check_above(global_position.x,global_position.y)
+	var multi_coin_e = multi_coin
 	var bump = summonables["Bump_Block"].instantiate()
 	bump.global_position = global_position + Vector2(0,-1)
 	bump.block_pos = int(global_position.y/16)
@@ -186,15 +199,26 @@ func bump_block() -> void:
 				bump.get_node("SpriteObject").anim = 1
 			else:
 				bump.get_node("SpriteObject").anim = 0
-			if item == 0:
+			if item == 0 || item == 3 || item == 5:
 				bump.get_node("SpriteObject").anim = 2
 				if Global.main_.level_type >= 2:
 					bump.palette_id = 1
-			elif item == 3:
-				var coin = summonables["CoinJump"].instantiate()
-				coin.global_position = global_position + Vector2(5,-20)
-				coin.y_velocity = -5
-				Global.main_sprit_n.add_child(coin)
+			elif item == 4:
+				if multi_coin_e != 0:
+					var coin = summonables["CoinJump"].instantiate()
+					coin.global_position = global_position + Vector2(5,-20)
+					coin.y_velocity = -5
+					Global.main_sprit_n.add_child(coin)
+					if multi_coin == -1:
+						multi_coin = 10
+				else:
+					bump.get_node("SpriteObject").anim = 2
+					if Global.main_.level_type >= 2:
+						bump.palette_id = 1
+					var coin = summonables["CoinJump"].instantiate()
+					coin.global_position = global_position + Vector2(5,-20)
+					coin.y_velocity = -5
+					Global.main_sprit_n.add_child(coin)
 		"QUESTION_BLOCK":
 			bump.get_node("SpriteObject").anim = 2
 			if Global.main_.level_type >= 2:
@@ -217,12 +241,17 @@ func bump_block() -> void:
 			self.queue_free()
 			Global.main_.inst_lvl_gen.place_newblock(global_position.x,global_position.y, "EMPTY_BLOCK")
 			if item == 0:
-				spawn_powerup()
+				spawn_powerup(0)
 		"BRICK", "BRICK_HI":
-			if item == 0:
+			if item == 0 || item == 3 || item == 5:
 				self.queue_free()
 				Global.main_.inst_lvl_gen.place_newblock(global_position.x,global_position.y, "EMPTY_BLOCK")
-				spawn_powerup()
+				spawn_powerup(item)
+			elif item == 4:
+				visible = true
+				if multi_coin_e == 0:
+					self.queue_free()
+					Global.main_.inst_lvl_gen.place_newblock(global_position.x,global_position.y, "EMPTY_BLOCK")
 			else:
 				visible = true
 		_:
@@ -230,11 +259,32 @@ func bump_block() -> void:
 ## END of bump_block
 
 
-func spawn_powerup() -> void:
+func remove_coin() -> void:
+	if Global.main_.level_type == 0:
+		Global.main_.inst_lvl_gen.place_newblock(global_position.x,global_position.y, "WATER")
+	else:
+		self.queue_free()
+## END of remove_coin
+
+
+func check_above(x,y) -> void:
+	var block_ = Global.main_.inst_lvl_gen.level_dict.find_key(Vector2(x,y-16))
+	if block_:
+		if block_.col_type == 2:
+			var coin = summonables["CoinJump"].instantiate()
+			coin.global_position = global_position + Vector2(5,-20)
+			coin.y_velocity = -5
+			Global.main_sprit_n.add_child(coin)
+			block_.queue_free()
+## END of check_above
+
+
+func spawn_powerup(type) -> void:
 	if Global.powerup_l != null:
 		Global.powerup_l.queue_free()
 	var powerup = summonables["PowerUp"].instantiate()
 	powerup.global_position = global_position + Vector2(0,-4)
+	powerup.type = type
 	Global.main_spritbh_n.add_child(powerup)
 	Global.powerup_l = powerup
 ## END of spawn_powerup

@@ -37,6 +37,8 @@ var lock_cam : bool = false
 
 var powerup_l
 
+var bg_bit: int = 0
+var platform_bit: int = 0
 var floor_bit: int = 0
 var floor_pattern_arr: Array = [
 	[0,0,0,0,0,0,0,0,0,0,0,0,0], # 0
@@ -56,9 +58,3 @@ var floor_pattern_arr: Array = [
 	[1,0,0,0,1,1,1,1,0,0,0,1,1], # 14
 	[1,1,1,1,1,1,1,1,1,1,1,1,1]  # 15
 ]
-var platform_bit: int = 0
-
-
-#func _ready() -> void:
-#	RenderingServer
-## END of _ready

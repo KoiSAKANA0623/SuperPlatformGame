@@ -1,7 +1,7 @@
 extends Level_Object
 
-## 0=Mushroom/Flower, 1=Coin, 
-@export_range(0,1, 1) var item: int = 1
+## 0=Mushroom, 1=Flower, 2=Coin
+@export_range(0,2, 1) var item: int = 2
 
 
 func _init() -> void:

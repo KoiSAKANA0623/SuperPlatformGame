@@ -34,6 +34,7 @@ ItemHit="The area that detects when Mario hits a ?Block or Bricks"
 Player_Head="Detects if player hits bottom of block"
 Mario=""
 PowerUp=""
+Coin=""
 
 [input]
 

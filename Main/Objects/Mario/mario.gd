@@ -45,6 +45,9 @@ var cutscene_type: int = 0
 
 var mario_timer: int = 0
 var mario_flash: int = 0
+var starman_timer: int = 0
+var pal: int = 0
+var fire_mario: bool = false
 
 var col_count: int = 0
 var swim_counter: int = 0
@@ -123,6 +126,9 @@ func _physics_process(_delta: float) -> void:
 		mario_flash -= 1
 	flash_mario()
 
+	if starman_timer > 0 && Global.interval_timer == 0:
+		starman_timer -= 1
+
 	if !control_lock:
 		inp_axis = Input.get_axis("Left","Right")
 		if underwater:
@@ -149,13 +155,6 @@ func _physics_process(_delta: float) -> void:
 			inp_axis = 1.0
 			direction = inp_axis
 
-#	if Input.is_action_just_pressed("Select"):
-#		if is_bigMario == 0:
-#			is_bigMario = 3
-#		else:
-#			is_bigMario = 6
-#		enabled = false
-
 	# Set Anims
 	if is_bigMario == 0 || is_bigMario == 9:
 		anim_mario()
@@ -177,7 +176,7 @@ func _physics_process(_delta: float) -> void:
 
 	camera()
 	Global.camera_pos = int(Camera_Node.global_position.x)
-	Global.refresh_line = int(Camera_Node.global_position.x/16)+24
+	Global.refresh_line = int(Camera_Node.global_position.x/16)+24 # 24
 
 	if global_position.x < Camera_Node.global_position.x:
 		global_position.x = Camera_Node.global_position.x
@@ -240,10 +239,20 @@ func anim_mario() -> void:
 						Visual_Node.anim = 7 + is_bigMario
 				else:
 					Visual_Node.anim = 7 + is_bigMario
+
+	if starman_timer > 0:
+		pal += 1
+		if pal >= 8:
+			pal = 0
+		var pal_in = pal/2
+		Visual_Node.pal_change(pal_in)
+	else:
+		Visual_Node.pal_change(0)
 ## END of anim_mario
 
 
 func ground_phys() -> void:
+	var is_ground_prev = is_grounded
 ## X MOVEMENT
 	if is_grounded:
 		if running_timer:
@@ -314,11 +323,12 @@ func ground_phys() -> void:
 	do_collisions()
 	position.x += x_velocity
 	if is_grounded:
+		y_velocity = 0
 		floor_last_vel = x_velocity
 
 ## Y MOVEMENT
-	if !is_grounded:
-		if Input.is_action_pressed("Jump") && y_velocity < 0:
+	if !is_ground_prev:
+		if Input.is_action_pressed("Jump") && y_velocity <= 0:
 			y_velocity += jmp_gravity
 		else:
 			jmp_gravity = gravity
@@ -326,7 +336,6 @@ func ground_phys() -> void:
 		if y_velocity >= 4.5:
 			y_velocity = 4
 	else:
-		y_velocity = 0
 		if Input.is_action_just_pressed("Jump") && !control_lock:
 			if abs(x_velocity) >= 2.3125:
 				y_velocity = -B_JMP_STRG
@@ -437,6 +446,24 @@ func water_phys() -> void:
 func do_collisions() -> void:
 	if block_bounce > 0:
 		block_bounce -= 1
+
+	var boundingbox = BoundBox_Small
+	if BoundBox_Small.visible == false:
+		boundingbox = BoundBox_Big
+
+	for i in boundingbox.get_overlapping_areas():
+		if i.is_in_group("PowerUp"):
+			i.get_parent().get_parent().queue_free()
+			if i.get_parent().get_parent().type <= 1:
+				if is_bigMario == 0:
+					is_bigMario = 3
+					enabled = false
+			elif i.get_parent().get_parent().type == 3:
+				starman_timer = 35
+		elif i.is_in_group("Coin"):
+			i.get_parent().remove_coin()
+#			i.get_parent().queue_free()
+
 # Ceiling Collision
 	TopBlock_Check.global_position.x = round(global_position.x/16)*16 + 8
 	TopBlock_Check.global_position.y = round(global_position.y/16)*16 - 8 + is_big_Adder
@@ -508,17 +535,6 @@ func do_collisions() -> void:
 			x_velocity = 0.0
 			col_count = 16
 		return
-
-	var boundingbox = BoundBox_Big
-	if is_bigMario == 0 or (is_duck && !inp_axis):
-		boundingbox = BoundBox_Small
-
-	for i in boundingbox.get_overlapping_areas():
-		if i.is_in_group("PowerUp"):
-			i.get_parent().get_parent().queue_free()
-			if is_bigMario == 0:
-				is_bigMario = 3
-				enabled = false
 ## END of do_collisions
 
 

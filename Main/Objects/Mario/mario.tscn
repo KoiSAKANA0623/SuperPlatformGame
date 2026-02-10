@@ -64,10 +64,10 @@ size = Vector2(4, 4)
 size = Vector2(12, 4)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xj44l"]
-size = Vector2(12, 24)
+size = Vector2(13, 25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_36wje"]
-size = Vector2(10, 12)
+size = Vector2(11, 13)
 
 [node name="Mario" type="Node2D" unique_id=753764594]
 script = ExtResource("1_8lt1j")
@@ -224,16 +224,18 @@ position = Vector2(8, 40)
 shape = SubResource("RectangleShape2D_jl3j7")
 
 [node name="BoundBox_Big" type="Area2D" parent="MarioCollision" unique_id=780973041 groups=["Mario"]]
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MarioCollision/BoundBox_Big" unique_id=1183880721]
-position = Vector2(8, 20)
+position = Vector2(8.5, 20.5)
 shape = SubResource("RectangleShape2D_xj44l")
 debug_color = Color(0.30510303, 0.62781984, 0, 0.41960785)
 
 [node name="BoundBox_Small" type="Area2D" parent="MarioCollision" unique_id=912334865 groups=["Mario"]]
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MarioCollision/BoundBox_Small" unique_id=1183321173]
-position = Vector2(8, 26)
+position = Vector2(8.5, 26.5)
 shape = SubResource("RectangleShape2D_36wje")
 debug_color = Color(0.30588236, 0.627451, 0, 0.41960785)
 

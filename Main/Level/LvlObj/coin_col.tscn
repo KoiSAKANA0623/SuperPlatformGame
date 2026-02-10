@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://wkcatv6708r8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_66hm2"]
+size = Vector2(16, 16)
+
+[node name="CoinCol" type="Area2D" unique_id=1699914245 groups=["Coin"]]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1093678890]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_66hm2")
+debug_color = Color(1, 0.95686275, 0, 0.41960785)

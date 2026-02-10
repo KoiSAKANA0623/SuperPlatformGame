@@ -4,3 +4,4 @@
 
 [node name="QuestionBlockItem" type="Node2D" unique_id=91811596]
 script = ExtResource("1_oph7d")
+lvl_object_type = "QUESTION_BLOCK_ITEM"
